@@ -8,42 +8,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 
 :root {
-  --bg: #0b1120;
-  --bg-deep: #070d1a;
-  --bg-panel: rgba(10,20,40,0.82);
+  --bg: #070e1a;
+  --bg-panel: rgba(8,18,38,0.82);
   --accent: #2dd4a0;
-  --accent-dim: rgba(45,212,160,0.10);
+  --accent-dim: rgba(45,212,160,0.08);
+  --accent-mid: rgba(45,212,160,0.18);
   --accent-glow: rgba(45,212,160,0.30);
   --accent-soft: #52e0b0;
-  --accent-bright: #80ffd0;
+  --accent2: #1aaf80;
   --blue: #6ba3d6;
-  --blue-dim: rgba(107,163,214,0.12);
   --red: #f06565;
   --green: #48d89b;
   --amber: #f0b429;
-  --text: rgba(200,215,235,0.82);
-  --text-dim: rgba(130,155,190,0.45);
-  --text-bright: rgba(230,240,255,0.95);
-  --border: rgba(45,212,160,0.08);
-  --border-bright: rgba(45,212,160,0.25);
-  --font-display: 'Rajdhani', sans-serif;
-  --font-ui: 'Noto Sans SC', sans-serif;
+  --text: rgba(190,210,230,0.80);
+  --text-dim: rgba(120,150,185,0.40);
+  --text-bright: rgba(225,240,255,0.95);
+  --border: rgba(45,212,160,0.07);
+  --border-bright: rgba(45,212,160,0.22);
+  --font-d: 'Rajdhani', sans-serif;
+  --font-u: 'Noto Sans SC', sans-serif;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html{font-size:14px;}
-body{
-  background:var(--bg);
-  font-family:var(--font-ui);
-  color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
+body{background:var(--bg);font-family:var(--font-u);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* ═══════ BACKGROUND LAYERS ═══════ */
+
+/* Layer 1: Deep circuit board pattern */
+.bg-circuit{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    /* Horizontal traces */
+    repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(45,212,160,0.02) 59px,rgba(45,212,160,0.02) 60px),
+    repeating-linear-gradient(0deg,transparent,transparent 119px,rgba(45,212,160,0.015) 119px,rgba(45,212,160,0.015) 120px),
+    /* Vertical traces */
+    repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(45,212,160,0.015) 79px,rgba(45,212,160,0.015) 80px),
+    repeating-linear-gradient(90deg,transparent,transparent 159px,rgba(45,212,160,0.02) 159px,rgba(45,212,160,0.02) 160px);
+}
+/* Circuit node dots */
+.bg-circuit::after{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(45,212,160,0.06) 1px,transparent 1px);
+  background-size:80px 60px;
+  background-position:0 0,40px 30px;
 }
 
-/* === Animated circuit grid background === */
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  opacity:0.025;
+/* Layer 2: Hex grid overlay */
+.bg-hex{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.018;
   background-image:
     linear-gradient(30deg,var(--accent) 12%,transparent 12.5%,transparent 87%,var(--accent) 87.5%,var(--accent)),
     linear-gradient(150deg,var(--accent) 12%,transparent 12.5%,transparent 87%,var(--accent) 87.5%,var(--accent)),
@@ -55,37 +68,52 @@ body::before{
   background-position:0 0,0 0,40px 70px,40px 70px,0 0,40px 70px;
 }
 
-/* Floating molecular decoration - right side */
-.mol-deco{
-  position:fixed;z-index:0;pointer-events:none;opacity:0.06;
-}
-.mol-deco svg{width:100%;height:100%;}
-.mol-1{top:10%;right:2%;width:200px;height:300px;}
-.mol-2{bottom:15%;left:3%;width:150px;height:200px;}
+/* Layer 3: Ambient light blobs */
+.glow{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(100px);}
+.glow-1{top:-15%;left:20%;width:600px;height:400px;background:rgba(45,212,160,0.025);animation:drift1 25s ease-in-out infinite;}
+.glow-2{bottom:-10%;right:10%;width:500px;height:400px;background:rgba(26,175,128,0.02);animation:drift2 30s ease-in-out infinite;}
+.glow-3{top:40%;right:30%;width:350px;height:300px;background:rgba(107,163,214,0.015);animation:drift1 20s ease-in-out infinite reverse;}
+@keyframes drift1{0%,100%{transform:translate(0,0);}50%{transform:translate(40px,25px);}}
+@keyframes drift2{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,-20px);}}
 
-/* Ambient glow blobs */
-.glow-blob{
-  position:fixed;z-index:0;pointer-events:none;border-radius:50%;
-  filter:blur(80px);
-}
-.glow-1{top:-10%;left:30%;width:500px;height:400px;background:rgba(45,212,160,0.03);animation:drift 20s ease-in-out infinite;}
-.glow-2{bottom:-5%;right:20%;width:400px;height:350px;background:rgba(107,163,214,0.025);animation:drift 25s ease-in-out infinite reverse;}
-@keyframes drift{
-  0%,100%{transform:translate(0,0);}
-  33%{transform:translate(30px,20px);}
-  66%{transform:translate(-20px,-15px);}
-}
-
-/* Scan line overlay */
-.scanline{
-  position:fixed;inset:0;z-index:9998;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 6px);
-}
-
-/* Floating particles canvas */
+/* Layer 4: Particle canvas */
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
-/* === DASHBOARD === */
+/* Layer 5: Scanline */
+.scanline{
+  position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.02) 2px,rgba(0,0,0,0.02) 4px);
+}
+/* Moving scan bar */
+.scan-bar{
+  position:fixed;left:0;right:0;height:2px;z-index:9997;pointer-events:none;
+  background:linear-gradient(90deg,transparent 10%,rgba(45,212,160,0.06) 50%,transparent 90%);
+  animation:scan-down 8s linear infinite;
+}
+@keyframes scan-down{0%{top:-2px;}100%{top:100%;}}
+
+/* Layer 6: Molecular SVG decorations */
+.mol-deco{position:fixed;z-index:0;pointer-events:none;opacity:0.05;}
+.mol-deco svg{width:100%;height:100%;}
+.mol-1{top:5%;right:1%;width:220px;height:350px;}
+.mol-2{bottom:8%;left:1%;width:180px;height:260px;}
+.mol-3{top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;opacity:0.02;}
+
+/* Layer 7: Floating data strings */
+.data-streams{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.data-stream{
+  position:absolute;font-family:var(--font-d);font-size:9px;
+  color:var(--accent);opacity:0;letter-spacing:2px;white-space:nowrap;
+  animation:stream-fall linear infinite;
+}
+@keyframes stream-fall{
+  0%{transform:translateY(-100%);opacity:0;}
+  10%{opacity:0.04;}
+  90%{opacity:0.04;}
+  100%{transform:translateY(100vh);opacity:0;}
+}
+
+/* ═══════ DASHBOARD ═══════ */
 .dashboard{
   position:relative;z-index:1;
   max-width:1460px;margin:0 auto;padding:14px;
@@ -95,247 +123,288 @@ body::before{
   gap:10px;min-height:100vh;
 }
 
-/* === HEADER === */
+/* ═══════ HEADER ═══════ */
 .header{
   grid-column:1/-1;
   display:flex;align-items:center;justify-content:space-between;
-  padding:10px 24px;
+  padding:12px 28px;
   background:var(--bg-panel);
   backdrop-filter:blur(16px);
-  border:1px solid var(--border);
+  border:1px solid var(--border-bright);
   position:relative;overflow:hidden;
 }
-/* Animated scan line across header */
-.header::after{
-  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(45,212,160,0.04),transparent);
-  animation:header-scan 6s linear infinite;
+/* Inner circuit trace decoration */
+.header-circuit{
+  position:absolute;inset:0;pointer-events:none;opacity:0.06;
 }
-@keyframes header-scan{0%{left:-60%;}100%{left:100%;}}
+.header-circuit .h-line{
+  position:absolute;height:1px;background:var(--accent);
+}
+.header-circuit .h-line:nth-child(1){top:6px;left:0;right:40%;width:auto;}
+.header-circuit .h-line:nth-child(2){bottom:6px;left:30%;right:0;width:auto;}
+.header-circuit .v-line{position:absolute;width:1px;background:var(--accent);}
+.header-circuit .v-line:nth-child(3){left:15%;top:0;bottom:0;}
+.header-circuit .v-line:nth-child(4){right:15%;top:0;bottom:0;}
+.header-circuit .node{
+  position:absolute;width:4px;height:4px;background:var(--accent);border-radius:50%;
+  box-shadow:0 0 4px var(--accent);
+}
+.header-circuit .node:nth-child(5){top:5px;left:15%;transform:translate(-50%,-50%);}
+.header-circuit .node:nth-child(6){top:5px;right:15%;transform:translate(50%,-50%);}
+.header-circuit .node:nth-child(7){bottom:5px;left:15%;transform:translate(-50%,50%);}
+.header-circuit .node:nth-child(8){bottom:5px;right:15%;transform:translate(50%,50%);}
+.header-circuit .node:nth-child(9){top:5px;left:40%;transform:translate(-50%,-50%);}
+.header-circuit .node:nth-child(10){bottom:5px;left:30%;transform:translate(-50%,50%);}
+
+/* Header scan sweep */
+.header::after{
+  content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(45,212,160,0.03),rgba(45,212,160,0.06),rgba(45,212,160,0.03),transparent);
+  animation:h-sweep 5s ease-in-out infinite;
+}
+@keyframes h-sweep{0%{left:-50%;}100%{left:100%;}}
 
 /* Bottom glow line */
 .header-glow{
-  position:absolute;bottom:0;left:24px;right:24px;height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  position:absolute;bottom:-1px;left:0;right:0;height:2px;z-index:2;
+  background:linear-gradient(90deg,transparent 5%,var(--accent) 30%,var(--accent-bright,#80ffd0) 50%,var(--accent) 70%,transparent 95%);
+  opacity:0.6;
 }
 .header-glow::after{
-  content:'';position:absolute;bottom:-1px;left:0;right:0;height:3px;
+  content:'';position:absolute;bottom:-4px;left:10%;right:10%;height:8px;
   background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);
-  filter:blur(4px);
+  filter:blur(6px);
 }
 
 .header-left{display:flex;align-items:center;gap:16px;position:relative;z-index:1;}
 .header-logo{
-  font-family:var(--font-display);font-size:18px;font-weight:700;
+  font-family:var(--font-d);font-size:18px;font-weight:700;
   color:var(--accent);letter-spacing:4px;text-transform:uppercase;
+  position:relative;
 }
-/* Subtle text glow */
 .header-logo::after{
   content:'Rhine Lab';position:absolute;left:0;top:0;
-  color:var(--accent);filter:blur(8px);opacity:0.4;z-index:-1;
+  color:var(--accent);filter:blur(10px);opacity:0.5;z-index:-1;
   letter-spacing:4px;
 }
+/* Logo molecular decoration */
+.logo-mol{
+  display:flex;align-items:center;gap:3px;margin-right:4px;
+}
+.logo-mol span{
+  display:block;background:var(--accent);border-radius:50%;
+  animation:logo-pulse 3s ease-in-out infinite;
+}
+.logo-mol span:nth-child(1){width:4px;height:4px;opacity:0.6;animation-delay:0s;}
+.logo-mol span:nth-child(2){width:6px;height:6px;opacity:0.8;animation-delay:0.5s;}
+.logo-mol span:nth-child(3){width:4px;height:4px;opacity:0.5;animation-delay:1s;}
+@keyframes logo-pulse{0%,100%{opacity:0.4;transform:scale(1);}50%{opacity:0.9;transform:scale(1.3);}}
+
 .header-sub{
   font-size:11px;color:var(--text-dim);letter-spacing:1.5px;
   border-left:1px solid var(--border-bright);padding-left:16px;
-  font-family:var(--font-display);
+  font-family:var(--font-d);
 }
 .header-right{display:flex;align-items:center;gap:20px;position:relative;z-index:1;}
-
-.conn-status{
-  display:flex;align-items:center;gap:6px;
-  font-family:var(--font-display);font-size:11px;letter-spacing:1px;
-}
+.conn-status{display:flex;align-items:center;gap:6px;font-family:var(--font-d);font-size:11px;letter-spacing:1px;}
 .conn-status.online{color:var(--accent);}
 .conn-status.offline{color:var(--red);}
 .conn-dot{width:6px;height:6px;border-radius:50%;}
-.conn-status.online .conn-dot{background:var(--accent);box-shadow:0 0 8px var(--accent),0 0 16px var(--accent-glow);animation:pulse 2s ease-in-out infinite;}
-.conn-status.offline .conn-dot{background:var(--red);box-shadow:0 0 8px var(--red);}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.8);}}
+.conn-status.online .conn-dot{background:var(--accent);box-shadow:0 0 6px var(--accent),0 0 14px var(--accent-glow);animation:blink 2s ease-in-out infinite;}
+.conn-status.offline .conn-dot{background:var(--red);box-shadow:0 0 6px var(--red);}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.clock-time{font-family:var(--font-d);font-size:22px;font-weight:600;color:var(--text-bright);letter-spacing:3px;}
+.clock-date{font-family:var(--font-d);font-size:11px;color:var(--text-dim);letter-spacing:1px;}
 
-.clock-time{
-  font-family:var(--font-display);font-size:22px;font-weight:600;
-  color:var(--text-bright);letter-spacing:3px;
-}
-.clock-date{font-family:var(--font-display);font-size:11px;color:var(--text-dim);letter-spacing:1px;}
-
-/* === PANELS === */
+/* ═══════ PANELS ═══════ */
 .panel{
   background:var(--bg-panel);
   backdrop-filter:blur(12px);
   border:1px solid var(--border);
   position:relative;overflow:hidden;
+  transition:border-color 0.3s;
 }
-/* Left accent bar */
+.panel:hover{border-color:var(--border-bright);}
+
+/* Left accent bar with glow */
 .panel::before{
   content:'';position:absolute;top:0;left:0;bottom:0;width:2px;
-  background:linear-gradient(180deg,var(--accent),transparent 80%);
+  background:linear-gradient(180deg,var(--accent) 0%,transparent 90%);
+  box-shadow:0 0 8px var(--accent-dim);
 }
-/* Corner brackets */
-.panel .corner{position:absolute;width:14px;height:14px;pointer-events:none;}
-.panel .corner-tl{top:0;left:0;border-top:2px solid var(--border-bright);border-left:2px solid var(--border-bright);}
-.panel .corner-tr{top:0;right:0;border-top:2px solid var(--border-bright);border-right:2px solid var(--border-bright);}
-.panel .corner-bl{bottom:0;left:0;border-bottom:2px solid var(--border-bright);border-left:2px solid var(--border-bright);}
-.panel .corner-br{bottom:0;right:0;border-bottom:2px solid var(--border-bright);border-right:2px solid var(--border-bright);}
 
-/* Hex badge in panel */
+/* Corner brackets */
+.panel .c{position:absolute;width:12px;height:12px;pointer-events:none;}
+.panel .c-tl{top:-1px;left:-1px;border-top:1.5px solid var(--accent);border-left:1.5px solid var(--accent);}
+.panel .c-tr{top:-1px;right:-1px;border-top:1.5px solid var(--accent);border-right:1.5px solid var(--accent);}
+.panel .c-bl{bottom:-1px;left:-1px;border-bottom:1.5px solid var(--accent);border-left:1.5px solid var(--accent);}
+.panel .c-br{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--accent);border-right:1.5px solid var(--accent);}
+
+/* Inner circuit trace lines */
+.panel-traces{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.panel-traces .trace{position:absolute;background:var(--accent);opacity:0.04;}
+.panel-traces .trace-h{height:1px;left:0;right:0;}
+.panel-traces .trace-h:nth-child(1){top:33%;}
+.panel-traces .trace-h:nth-child(2){top:66%;}
+.panel-traces .trace-v{width:1px;top:0;bottom:0;}
+.panel-traces .trace-v:nth-child(3){left:50%;}
+.panel-traces .trace-dot{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:var(--accent);opacity:0.08;
+}
+.panel-traces .trace-dot:nth-child(4){top:33%;left:50%;transform:translate(-50%,-50%);}
+.panel-traces .trace-dot:nth-child(5){top:66%;left:50%;transform:translate(-50%,-50%);}
+
+/* Rotating hex badge */
 .panel-hex{
-  position:absolute;top:8px;right:10px;width:16px;height:16px;
-  opacity:0.2;pointer-events:none;
+  position:absolute;top:7px;right:8px;width:14px;height:14px;
+  opacity:0.15;pointer-events:none;
   background:var(--accent);
   clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-  animation:hex-rotate 15s linear infinite;
+  animation:hex-spin 20s linear infinite;
 }
-@keyframes hex-rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes hex-spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
-/* Data stream decoration on panel edge */
+/* Data stream bars */
 .panel-stream{
-  position:absolute;top:12px;right:34px;display:flex;flex-direction:column;gap:2px;
+  position:absolute;top:10px;right:28px;display:flex;flex-direction:column;gap:2px;
   pointer-events:none;
 }
 .panel-stream .bar{
-  height:1px;background:var(--accent);opacity:0.15;animation:stream-flow 3s ease-in-out infinite;
+  height:1px;background:var(--accent);opacity:0.1;
+  animation:sflow 4s ease-in-out infinite;
 }
-.panel-stream .bar:nth-child(1){width:20px;animation-delay:0s;}
-.panel-stream .bar:nth-child(2){width:14px;animation-delay:0.3s;}
-.panel-stream .bar:nth-child(3){width:22px;animation-delay:0.6s;}
-.panel-stream .bar:nth-child(4){width:10px;animation-delay:0.9s;}
-.panel-stream .bar:nth-child(5){width:18px;animation-delay:1.2s;}
-@keyframes stream-flow{0%,100%{opacity:0.08;transform:scaleX(0.6);}50%{opacity:0.2;transform:scaleX(1);}}
+.panel-stream .bar:nth-child(1){width:18px;animation-delay:0s;}
+.panel-stream .bar:nth-child(2){width:12px;animation-delay:0.4s;}
+.panel-stream .bar:nth-child(3){width:22px;animation-delay:0.8s;}
+.panel-stream .bar:nth-child(4){width:8px;animation-delay:1.2s;}
+.panel-stream .bar:nth-child(5){width:16px;animation-delay:1.6s;}
+.panel-stream .bar:nth-child(6){width:10px;animation-delay:2.0s;}
+@keyframes sflow{0%,100%{opacity:0.05;transform:scaleX(0.5);}50%{opacity:0.15;transform:scaleX(1);}}
 
 .panel-head{
   padding:10px 16px 8px 18px;
-  font-family:var(--font-display);
+  font-family:var(--font-d);
   font-size:11px;font-weight:600;letter-spacing:2.5px;
-  text-transform:uppercase;
-  color:var(--accent-soft);
+  text-transform:uppercase;color:var(--accent-soft);
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;gap:8px;
+  position:relative;
 }
 .panel-head .tag{
   font-size:9px;padding:1px 6px;
   border:1px solid var(--border-bright);border-radius:1px;
   color:var(--accent);letter-spacing:1px;font-weight:400;
 }
-/* Molecular dot decoration in header */
-.panel-head .mol-dots{
-  margin-left:auto;display:flex;gap:3px;
+/* Molecular dots in header */
+.panel-head .dots{margin-left:auto;display:flex;gap:4px;align-items:center;}
+.panel-head .dots span{
+  width:2.5px;height:2.5px;border-radius:50%;background:var(--accent);
 }
-.panel-head .mol-dots span{
-  width:3px;height:3px;border-radius:50%;background:var(--accent);opacity:0.2;
+.panel-head .dots span:nth-child(1){opacity:0.15;}
+.panel-head .dots span:nth-child(2){opacity:0.3;animation:dblink 3s ease-in-out infinite;}
+.panel-head .dots span:nth-child(3){opacity:0.12;}
+@keyframes dblink{0%,100%{opacity:0.3;}50%{opacity:0.08;}}
+/* Tiny line connecting dots */
+.panel-head .dots::before{
+  content:'';position:absolute;right:52px;top:50%;width:12px;height:1px;
+  background:var(--accent);opacity:0.08;transform:translateY(-50%);
 }
-.panel-head .mol-dots span:nth-child(2){opacity:0.35;}
-.panel-head .mol-dots span:nth-child(3){opacity:0.15;}
 
 .panel-body{padding:10px 16px;}
 
-/* === LAYOUT === */
+/* ═══════ COMPONENTS ═══════ */
 .left-col,.right-col{display:flex;flex-direction:column;gap:10px;}
 .center-col{display:flex;flex-direction:column;gap:10px;}
 
-/* === SYS ITEMS === */
-.sys-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:6px 0;border-bottom:1px solid rgba(45,212,160,0.03);
-  font-size:12px;
-}
+.sys-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(45,212,160,0.025);font-size:12px;}
 .sys-row:last-child{border-bottom:none;}
 .sys-key{color:var(--text-dim);}
-.sys-val{font-family:var(--font-display);font-size:12px;font-weight:500;color:var(--text-bright);letter-spacing:0.5px;}
+.sys-val{font-family:var(--font-d);font-size:12px;font-weight:500;color:var(--text-bright);letter-spacing:0.5px;}
 
-/* === GAUGES === */
 .gauge{margin:6px 0;}
 .gauge-head{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;}
 .gauge-head .label{color:var(--text-dim);}
-.gauge-head .value{font-family:var(--font-display);font-size:11px;font-weight:600;color:var(--text-bright);}
-.gauge-track{
-  height:4px;background:rgba(255,255,255,0.03);border-radius:2px;
-  overflow:hidden;position:relative;
-}
-/* Subtle glow under bar */
+.gauge-head .value{font-family:var(--font-d);font-size:11px;font-weight:600;color:var(--text-bright);}
+.gauge-track{height:4px;background:rgba(255,255,255,0.025);border-radius:2px;overflow:hidden;position:relative;}
 .gauge-track::after{
-  content:'';position:absolute;bottom:-2px;left:0;right:0;height:4px;
-  background:inherit;filter:blur(4px);opacity:0.3;
+  content:'';position:absolute;bottom:-3px;left:0;right:0;height:6px;
+  filter:blur(4px);opacity:0.4;
 }
-.gauge-bar{height:100%;border-radius:2px;transition:width 1s ease;}
+.gauge-bar{height:100%;border-radius:2px;transition:width 1s ease;position:relative;}
+.gauge-bar::after{
+  content:'';position:absolute;right:0;top:-1px;bottom:-1px;width:2px;
+  background:inherit;filter:brightness(1.5);opacity:0.6;
+}
 .gauge-bar.c1{background:linear-gradient(90deg,#1a8a6a,var(--accent));box-shadow:0 0 8px var(--accent-dim);}
-.gauge-bar.c2{background:linear-gradient(90deg,#2a6a9a,var(--blue));box-shadow:0 0 8px var(--blue-dim);}
-.gauge-bar.c3{background:linear-gradient(90deg,#2a7a4a,var(--green));box-shadow:0 0 8px rgba(72,216,155,0.1);}
-.gauge-bar.c4{background:linear-gradient(90deg,#8a5a2a,var(--amber));box-shadow:0 0 8px rgba(240,180,41,0.1);}
-.gauge-bar.c5{background:linear-gradient(90deg,#8a2a2a,var(--red));box-shadow:0 0 8px rgba(240,101,101,0.1);}
+.gauge-bar.c2{background:linear-gradient(90deg,#2a6a9a,var(--blue));box-shadow:0 0 8px rgba(107,163,214,0.1);}
+.gauge-bar.c3{background:linear-gradient(90deg,#2a7a4a,var(--green));box-shadow:0 0 8px rgba(72,216,155,0.08);}
+.gauge-bar.c4{background:linear-gradient(90deg,#8a5a2a,var(--amber));box-shadow:0 0 8px rgba(240,180,41,0.08);}
+.gauge-bar.c5{background:linear-gradient(90deg,#8a2a2a,var(--red));box-shadow:0 0 8px rgba(240,101,101,0.08);}
 
-/* === TEMPS === */
 .temp-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
 .temp-card{
-  padding:8px 6px;background:rgba(45,212,160,0.02);
-  border:1px solid rgba(45,212,160,0.05);border-radius:2px;
+  padding:8px 6px;background:rgba(45,212,160,0.015);
+  border:1px solid rgba(45,212,160,0.04);border-radius:2px;
   text-align:center;position:relative;overflow:hidden;
 }
-/* Pulsing glow */
-.temp-card::after{
-  content:'';position:absolute;bottom:-4px;left:25%;right:25%;height:8px;
-  background:var(--accent);filter:blur(6px);opacity:0.08;
-  animation:temp-glow 3s ease-in-out infinite;
+.temp-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0.15;
 }
-@keyframes temp-glow{0%,100%{opacity:0.05;}50%{opacity:0.12;}}
-.temp-lbl{font-family:var(--font-display);font-size:9px;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;}
-.temp-num{font-family:var(--font-display);font-size:20px;font-weight:700;margin:2px 0;}
+.temp-card::after{
+  content:'';position:absolute;bottom:-3px;left:20%;right:20%;height:6px;
+  background:var(--accent);filter:blur(6px);opacity:0.06;
+  animation:tglow 3s ease-in-out infinite;
+}
+@keyframes tglow{0%,100%{opacity:0.04;}50%{opacity:0.10;}}
+.temp-lbl{font-family:var(--font-d);font-size:9px;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;}
+.temp-num{font-family:var(--font-d);font-size:20px;font-weight:700;margin:2px 0;}
 .temp-num.t-cool{color:var(--accent);}
 .temp-num.t-warm{color:var(--amber);}
 .temp-num.t-hot{color:var(--red);}
 .temp-num.t-na{color:var(--text-dim);font-size:12px;}
 
-/* === GRAPH === */
 .graph-wrap{width:100%;height:170px;position:relative;}
 .graph-wrap canvas{width:100%;height:100%;}
-.graph-legend{
-  position:absolute;bottom:6px;right:10px;
-  display:flex;gap:14px;font-size:10px;font-family:var(--font-display);letter-spacing:1px;
-}
+.graph-legend{position:absolute;bottom:6px;right:10px;display:flex;gap:14px;font-size:10px;font-family:var(--font-d);letter-spacing:1px;}
 .graph-legend span{display:flex;align-items:center;gap:5px;color:var(--text-dim);}
 .leg-line{width:10px;height:2px;border-radius:1px;}
 
-/* === TABLE === */
 .proc-tbl{width:100%;font-size:11px;border-collapse:collapse;}
 .proc-tbl thead th{
-  text-align:left;padding:5px 8px;font-family:var(--font-display);
+  text-align:left;padding:5px 8px;font-family:var(--font-d);
   font-size:9px;letter-spacing:1.5px;color:var(--accent-soft);
   border-bottom:1px solid var(--border);text-transform:uppercase;font-weight:500;
 }
 .proc-tbl tbody tr{border-bottom:1px solid rgba(45,212,160,0.02);transition:background 0.15s;}
 .proc-tbl tbody tr:hover{background:rgba(45,212,160,0.04);}
-.proc-tbl td{padding:5px 8px;font-family:var(--font-display);font-size:11px;}
+.proc-tbl td{padding:5px 8px;font-family:var(--font-d);font-size:11px;}
 .proc-tbl .p-pid{color:var(--text-dim);font-size:10px;}
-.proc-tbl .p-name{color:var(--text-bright);font-family:var(--font-ui);font-size:12px;}
+.proc-tbl .p-name{color:var(--text-bright);font-family:var(--font-u);font-size:12px;}
 .proc-tbl .p-cpu{color:var(--accent);}
 .proc-tbl .p-mem{color:var(--blue);}
 
-/* === LOGS === */
 .log-box{max-height:300px;overflow-y:auto;}
 .log-box::-webkit-scrollbar{width:3px;}
 .log-box::-webkit-scrollbar-thumb{background:var(--accent-dim);border-radius:2px;}
 .log-item{padding:5px 0;border-bottom:1px solid rgba(45,212,160,0.02);font-size:10px;line-height:1.5;}
-.log-ts{font-family:var(--font-display);font-size:9px;color:var(--accent);margin-right:6px;letter-spacing:0.5px;}
+.log-ts{font-family:var(--font-d);font-size:9px;color:var(--accent);margin-right:6px;letter-spacing:0.5px;}
 .log-msg{color:var(--text-dim);}
 .log-item.warn .log-msg{color:var(--amber);}
 .log-item.error .log-msg{color:var(--red);}
 .log-item.ok .log-msg{color:var(--green);}
 
-/* === DISK === */
 .disk-row{margin:8px 0;}
 .disk-info{font-size:11px;color:var(--text-bright);margin-bottom:2px;display:flex;justify-content:space-between;}
-.disk-sz{font-family:var(--font-display);font-size:10px;color:var(--text-dim);}
+.disk-sz{font-family:var(--font-d);font-size:10px;color:var(--text-dim);}
 
-/* === FOOTER === */
+/* ═══════ FOOTER ═══════ */
 .footer-bar{
-  grid-column:1/-1;
-  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  padding:7px 24px;
-  background:var(--bg-panel);
-  backdrop-filter:blur(12px);
+  grid-column:1/-1;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:7px 24px;background:var(--bg-panel);backdrop-filter:blur(12px);
   border:1px solid var(--border);
-  font-size:11px;color:var(--text-dim);
-  font-family:var(--font-display);letter-spacing:0.5px;
+  font-size:11px;color:var(--text-dim);font-family:var(--font-d);letter-spacing:0.5px;
 }
 .footer-label{color:var(--accent-soft);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;}
 .footer-val{color:var(--text-bright);font-weight:500;}
@@ -345,55 +414,94 @@ body::before{
   .dashboard{grid-template-columns:1fr;}
   .left-col,.right-col{display:none;}
   .header{flex-wrap:wrap;gap:8px;}
-  .mol-deco{display:none;}
+  .mol-deco,.data-streams{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- Scanline overlay -->
-<div class="scanline"></div>
-
-<!-- Particle canvas -->
+<div class="bg-circuit"></div>
+<div class="bg-hex"></div>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
 <canvas id="particles"></canvas>
+<div class="scanline"></div>
+<div class="scan-bar"></div>
 
 <!-- Molecular decorations -->
 <div class="mol-deco mol-1">
-  <svg viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--accent)">
-    <circle cx="100" cy="60" r="8" fill="currentColor" opacity="0.3"/>
-    <circle cx="60" cy="130" r="5" fill="currentColor" opacity="0.2"/>
-    <circle cx="150" cy="110" r="6" fill="currentColor" opacity="0.25"/>
-    <circle cx="80" cy="200" r="7" fill="currentColor" opacity="0.2"/>
-    <circle cx="140" cy="220" r="4" fill="currentColor" opacity="0.3"/>
-    <circle cx="110" cy="270" r="5" fill="currentColor" opacity="0.15"/>
-    <line x1="100" y1="68" x2="60" y2="125"/><line x1="100" y1="68" x2="150" y2="104"/>
-    <line x1="60" y1="135" x2="80" y2="193"/><line x1="150" y1="116" x2="140" y2="216"/>
-    <line x1="80" y1="207" x2="110" y2="265"/><line x1="140" y1="220" x2="110" y2="270"/>
-    <line x1="60" y1="130" x2="150" y2="110" stroke-dasharray="3 5" opacity="0.4"/>
-    <line x1="80" y1="200" x2="140" y2="220" stroke-dasharray="3 5" opacity="0.4"/>
+  <svg viewBox="0 0 220 350" fill="none" stroke="currentColor" stroke-width="0.6" style="color:var(--accent)">
+    <circle cx="110" cy="50" r="8" fill="currentColor" opacity="0.4"/>
+    <circle cx="55" cy="120" r="5" fill="currentColor" opacity="0.25"/>
+    <circle cx="170" cy="100" r="6" fill="currentColor" opacity="0.3"/>
+    <circle cx="80" cy="195" r="7" fill="currentColor" opacity="0.25"/>
+    <circle cx="155" cy="210" r="5" fill="currentColor" opacity="0.35"/>
+    <circle cx="120" cy="280" r="6" fill="currentColor" opacity="0.2"/>
+    <circle cx="60" cy="300" r="4" fill="currentColor" opacity="0.2"/>
+    <line x1="110" y1="58" x2="55" y2="115"/><line x1="110" y1="58" x2="170" y2="94"/>
+    <line x1="55" y1="125" x2="80" y2="188"/><line x1="170" y1="106" x2="155" y2="205"/>
+    <line x1="80" y1="202" x2="120" y2="274"/><line x1="155" y1="215" x2="120" y2="274"/>
+    <line x1="80" y1="202" x2="60" y2="296"/>
+    <line x1="55" y1="120" x2="170" y2="100" stroke-dasharray="4 6" opacity="0.3"/>
+    <line x1="80" y1="195" x2="155" y2="210" stroke-dasharray="4 6" opacity="0.3"/>
+    <line x1="120" y1="280" x2="60" y2="300" stroke-dasharray="3 5" opacity="0.25"/>
+    <!-- Double bond hint -->
+    <line x1="112" y1="57" x2="57" y2="114" opacity="0.2"/>
+    <line x1="112" y1="57" x2="172" y2="93" opacity="0.2"/>
   </svg>
 </div>
 <div class="mol-deco mol-2">
-  <svg viewBox="0 0 150 200" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--accent)">
-    <circle cx="75" cy="40" r="6" fill="currentColor" opacity="0.25"/>
+  <svg viewBox="0 0 180 260" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--accent)">
+    <circle cx="90" cy="40" r="6" fill="currentColor" opacity="0.3"/>
     <circle cx="40" cy="90" r="4" fill="currentColor" opacity="0.2"/>
-    <circle cx="110" cy="80" r="5" fill="currentColor" opacity="0.2"/>
-    <circle cx="60" cy="150" r="7" fill="currentColor" opacity="0.15"/>
-    <circle cx="120" cy="160" r="4" fill="currentColor" opacity="0.25"/>
-    <line x1="75" y1="46" x2="40" y2="86"/><line x1="75" y1="46" x2="110" y2="75"/>
-    <line x1="40" y1="94" x2="60" y2="143"/><line x1="110" y1="85" x2="120" y2="156"/>
-    <line x1="60" y1="150" x2="120" y2="160" stroke-dasharray="2 4" opacity="0.3"/>
+    <circle cx="140" cy="80" r="5" fill="currentColor" opacity="0.25"/>
+    <circle cx="65" cy="160" r="7" fill="currentColor" opacity="0.2"/>
+    <circle cx="130" cy="170" r="4" fill="currentColor" opacity="0.3"/>
+    <circle cx="100" cy="230" r="5" fill="currentColor" opacity="0.15"/>
+    <line x1="90" y1="46" x2="40" y2="86"/><line x1="90" y1="46" x2="140" y2="75"/>
+    <line x1="40" y1="94" x2="65" y2="153"/><line x1="140" y1="85" x2="130" y2="166"/>
+    <line x1="65" y1="167" x2="100" y2="225"/><line x1="130" y1="174" x2="100" y2="225"/>
+    <line x1="65" y1="160" x2="130" y2="170" stroke-dasharray="3 5" opacity="0.3"/>
+    <line x1="40" y1="90" x2="140" y2="80" stroke-dasharray="3 5" opacity="0.2"/>
+  </svg>
+</div>
+<div class="mol-deco mol-3">
+  <svg viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="0.4" style="color:var(--accent)">
+    <circle cx="150" cy="80" r="10" fill="currentColor" opacity="0.3"/>
+    <circle cx="80" cy="180" r="8" fill="currentColor" opacity="0.2"/>
+    <circle cx="230" cy="170" r="9" fill="currentColor" opacity="0.25"/>
+    <circle cx="120" cy="260" r="7" fill="currentColor" opacity="0.15"/>
+    <circle cx="200" cy="260" r="6" fill="currentColor" opacity="0.2"/>
+    <line x1="150" y1="90" x2="80" y2="172"/><line x1="150" y1="90" x2="230" y2="161"/>
+    <line x1="80" y1="188" x2="120" y2="253"/><line x1="230" y1="179" x2="200" y2="254"/>
+    <line x1="120" y1="260" x2="200" y2="260"/>
+    <line x1="80" y1="180" x2="230" y2="170" stroke-dasharray="6 8" opacity="0.2"/>
+    <line x1="150" y1="80" x2="150" y2="260" stroke-dasharray="4 8" opacity="0.1"/>
   </svg>
 </div>
 
-<!-- Ambient glow blobs -->
-<div class="glow-blob glow-1"></div>
-<div class="glow-blob glow-2"></div>
+<!-- Floating data streams -->
+<div class="data-streams">
+  <div class="data-stream" style="left:5%;animation-duration:35s;animation-delay:0s;">0x4A 2D FF 81 C0 7E 3B A1 D6 09 4F</div>
+  <div class="data-stream" style="left:20%;animation-duration:42s;animation-delay:5s;">SYS::NODE_RHIZOME_07 LINK::ACTIVE</div>
+  <div class="data-stream" style="left:45%;animation-duration:38s;animation-delay:10s;">TEMP:36.2°C PRES:101.3hPa HUM:45%</div>
+  <div class="data-stream" style="left:65%;animation-duration:45s;animation-delay:3s;">0xBE 41 00 CF 88 2A 77 D3 E5 6B</div>
+  <div class="data-stream" style="left:80%;animation-duration:40s;animation-delay:8s;">RHINE::LAB::LIFESIGN_NET OK</div>
+  <div class="data-stream" style="left:35%;animation-duration:50s;animation-delay:15s;">ORIGINUM_DENSITY:0.0021 BU/m³</div>
+  <div class="data-stream" style="left:92%;animation-duration:36s;animation-delay:12s;">SYNC::2048BIT AES-GCM VERIFIED</div>
+</div>
 
 <div class="dashboard">
 
   <div class="header">
+    <div class="header-circuit">
+      <div class="h-line"></div><div class="h-line"></div>
+      <div class="v-line"></div><div class="v-line"></div>
+      <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+    </div>
     <div class="header-left">
+      <div class="logo-mol"><span></span><span></span><span></span></div>
       <div class="header-logo">Rhine Lab</div>
       <div class="header-sub">INFRASTRUCTURE MONITORING SYSTEM</div>
     </div>
@@ -410,11 +518,11 @@ body::before{
   <!-- LEFT -->
   <div class="left-col">
     <div class="panel">
-      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="c c-tl"></div><div class="c c-tr"></div><div class="c c-bl"></div><div class="c c-br"></div>
+      <div class="panel-traces"><div class="trace trace-h"></div><div class="trace trace-h"></div><div class="trace trace-v"></div><div class="trace-dot"></div><div class="trace-dot"></div></div>
       <div class="panel-hex"></div>
-      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-      <div class="panel-head">系统概览 <span class="tag">SYSTEM</span><div class="mol-dots"><span></span><span></span><span></span></div></div>
+      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      <div class="panel-head">系统概览 <span class="tag">SYSTEM</span><div class="dots"><span></span><span></span><span></span></div></div>
       <div class="panel-body">
         <div class="sys-row"><span class="sys-key">主机名</span><span class="sys-val" id="hostname">---</span></div>
         <div class="sys-row"><span class="sys-key">内核</span><span class="sys-val" id="kernel">---</span></div>
@@ -426,33 +534,24 @@ body::before{
     </div>
 
     <div class="panel">
-      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="c c-tl"></div><div class="c c-tr"></div><div class="c c-bl"></div><div class="c c-br"></div>
+      <div class="panel-traces"><div class="trace trace-h"></div><div class="trace trace-h"></div><div class="trace trace-v"></div><div class="trace-dot"></div><div class="trace-dot"></div></div>
       <div class="panel-hex"></div>
-      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-      <div class="panel-head">资源占用 <span class="tag">RESOURCE</span><div class="mol-dots"><span></span><span></span><span></span></div></div>
+      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      <div class="panel-head">资源占用 <span class="tag">RESOURCE</span><div class="dots"><span></span><span></span><span></span></div></div>
       <div class="panel-body">
-        <div class="gauge">
-          <div class="gauge-head"><span class="label">CPU</span><span class="value" id="cpu-pct">--%</span></div>
-          <div class="gauge-track"><div class="gauge-bar c1" id="cpu-bar" style="width:0%"></div></div>
-        </div>
-        <div class="gauge">
-          <div class="gauge-head"><span class="label">内存</span><span class="value" id="mem-pct">-- / --</span></div>
-          <div class="gauge-track"><div class="gauge-bar c2" id="mem-bar" style="width:0%"></div></div>
-        </div>
-        <div class="gauge">
-          <div class="gauge-head"><span class="label">Swap</span><span class="value" id="swap-pct">-- / --</span></div>
-          <div class="gauge-track"><div class="gauge-bar c3" id="swap-bar" style="width:0%"></div></div>
-        </div>
+        <div class="gauge"><div class="gauge-head"><span class="label">CPU</span><span class="value" id="cpu-pct">--%</span></div><div class="gauge-track"><div class="gauge-bar c1" id="cpu-bar" style="width:0%"></div></div></div>
+        <div class="gauge"><div class="gauge-head"><span class="label">内存</span><span class="value" id="mem-pct">-- / --</span></div><div class="gauge-track"><div class="gauge-bar c2" id="mem-bar" style="width:0%"></div></div></div>
+        <div class="gauge"><div class="gauge-head"><span class="label">Swap</span><span class="value" id="swap-pct">-- / --</span></div><div class="gauge-track"><div class="gauge-bar c3" id="swap-bar" style="width:0%"></div></div></div>
       </div>
     </div>
 
     <div class="panel">
-      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="c c-tl"></div><div class="c c-tr"></div><div class="c c-bl"></div><div class="c c-br"></div>
+      <div class="panel-traces"><div class="trace trace-h"></div><div class="trace trace-h"></div><div class="trace trace-v"></div><div class="trace-dot"></div><div class="trace-dot"></div></div>
       <div class="panel-hex"></div>
-      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-      <div class="panel-head">温度监测 <span class="tag">THERMAL</span><div class="mol-dots"><span></span><span></span><span></span></div></div>
+      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      <div class="panel-head">温度监测 <span class="tag">THERMAL</span><div class="dots"><span></span><span></span><span></span></div></div>
       <div class="panel-body">
         <div class="temp-grid">
           <div class="temp-card"><div class="temp-lbl">CPU</div><div class="temp-num t-na" id="temp-cpu">--</div></div>
@@ -467,10 +566,10 @@ body::before{
   <!-- CENTER -->
   <div class="center-col">
     <div class="panel">
-      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="c c-tl"></div><div class="c c-tr"></div><div class="c c-bl"></div><div class="c c-br"></div>
+      <div class="panel-traces"><div class="trace trace-h"></div><div class="trace trace-h"></div><div class="trace trace-v"></div><div class="trace-dot"></div><div class="trace-dot"></div></div>
       <div class="panel-hex"></div>
-      <div class="panel-head">网络 I/O <span class="tag">NETWORK</span> <div class="mol-dots"><span></span><span></span><span></span></div> <span style="margin-left:auto;font-size:9px;color:var(--text-dim)">60s WINDOW</span></div>
+      <div class="panel-head">网络 I/O <span class="tag">NETWORK</span><div class="dots"><span></span><span></span><span></span></div> <span style="margin-left:auto;font-size:9px;color:var(--text-dim)">60s WINDOW</span></div>
       <div class="panel-body">
         <div class="graph-wrap">
           <canvas id="net-graph"></canvas>
@@ -483,11 +582,11 @@ body::before{
     </div>
 
     <div class="panel" style="flex:1">
-      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="c c-tl"></div><div class="c c-tr"></div><div class="c c-bl"></div><div class="c c-br"></div>
+      <div class="panel-traces"><div class="trace trace-h"></div><div class="trace trace-h"></div><div class="trace trace-v"></div><div class="trace-dot"></div><div class="trace-dot"></div></div>
       <div class="panel-hex"></div>
-      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-      <div class="panel-head">活跃进程 <span class="tag">PROCESS</span><div class="mol-dots"><span></span><span></span><span></span></div></div>
+      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      <div class="panel-head">活跃进程 <span class="tag">PROCESS</span><div class="dots"><span></span><span></span><span></span></div></div>
       <div class="panel-body" style="padding:0">
         <table class="proc-tbl">
           <thead><tr><th>PID</th><th>进程</th><th>CPU%</th><th>MEM%</th><th>状态</th></tr></thead>
@@ -500,26 +599,25 @@ body::before{
   <!-- RIGHT -->
   <div class="right-col">
     <div class="panel">
-      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="c c-tl"></div><div class="c c-tr"></div><div class="c c-bl"></div><div class="c c-br"></div>
+      <div class="panel-traces"><div class="trace trace-h"></div><div class="trace trace-h"></div><div class="trace trace-v"></div><div class="trace-dot"></div><div class="trace-dot"></div></div>
       <div class="panel-hex"></div>
-      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-      <div class="panel-head">存储设备 <span class="tag">STORAGE</span><div class="mol-dots"><span></span><span></span><span></span></div></div>
+      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      <div class="panel-head">存储设备 <span class="tag">STORAGE</span><div class="dots"><span></span><span></span><span></span></div></div>
       <div class="panel-body" id="disk-body"><span style="color:var(--text-dim);font-size:11px">等待数据...</span></div>
     </div>
     <div class="panel" style="flex:1">
-      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="c c-tl"></div><div class="c c-tr"></div><div class="c c-bl"></div><div class="c c-br"></div>
+      <div class="panel-traces"><div class="trace trace-h"></div><div class="trace trace-h"></div><div class="trace trace-v"></div><div class="trace-dot"></div><div class="trace-dot"></div></div>
       <div class="panel-hex"></div>
-      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-      <div class="panel-head">系统日志 <span class="tag">LOG</span><div class="mol-dots"><span></span><span></span><span></span></div></div>
+      <div class="panel-stream"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+      <div class="panel-head">系统日志 <span class="tag">LOG</span><div class="dots"><span></span><span></span><span></span></div></div>
       <div class="panel-body">
         <div class="log-box" id="log-box"><span style="color:var(--text-dim);font-size:11px">等待数据...</span></div>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
   <div class="footer-bar">
     <span class="footer-label">SYS</span>
     <span>LOAD:</span><span class="footer-val" id="load-avg">--</span>
@@ -539,47 +637,30 @@ const $=id=>document.getElementById(id);
 // === Particles ===
 (function(){
   const c=document.getElementById('particles'),ctx=c.getContext('2d');
-  let W,H;
-  const pts=[];
-  const N=35;
-
+  let W,H;const pts=[];const N=45;
   function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
   resize();window.addEventListener('resize',resize);
-
-  for(let i=0;i<N;i++){
-    pts.push({
-      x:Math.random()*W,y:Math.random()*H,
-      vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,
-      r:Math.random()*1.5+0.5,
-      o:Math.random()*0.15+0.03
-    });
-  }
-
+  for(let i=0;i<N;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.25,vy:(Math.random()-0.5)*0.25,r:Math.random()*1.2+0.4,o:Math.random()*0.12+0.02});
   function draw(){
     ctx.clearRect(0,0,W,H);
-    // Draw connections
     for(let i=0;i<N;i++){
       for(let j=i+1;j<N;j++){
-        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<200){
-          ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
-          ctx.strokeStyle=`rgba(45,212,160,${0.03*(1-d/200)})`;ctx.lineWidth=0.5;ctx.stroke();
-        }
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<180){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(45,212,160,${0.025*(1-d/180)})`;ctx.lineWidth=0.5;ctx.stroke();}
       }
     }
-    // Draw dots
     pts.forEach(p=>{
       p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>W)p.vx*=-1;
-      if(p.y<0||p.y>H)p.vy*=-1;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
       ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
       ctx.fillStyle=`rgba(45,212,160,${p.o})`;ctx.fill();
+      // Tiny glow
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r*3,0,Math.PI*2);
+      ctx.fillStyle=`rgba(45,212,160,${p.o*0.15})`;ctx.fill();
     });
     requestAnimationFrame(draw);
   }
-  // Respect prefers-reduced-motion
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) draw();
+  draw();
 })();
 
 // === Clock ===
@@ -587,8 +668,7 @@ function updateClock(){
   const n=new Date();
   $('clock').textContent=n.toTimeString().slice(0,8);
   const y=n.getFullYear(),m=String(n.getMonth()+1).padStart(2,'0'),d=String(n.getDate()).padStart(2,'0');
-  const days=['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  $('date').textContent=`${y}/${m}/${d} ${days[n.getDay()]}`;
+  $('date').textContent=`${y}/${m}/${d} ${['SUN','MON','TUE','WED','THU','FRI','SAT'][n.getDay()]}`;
 }
 setInterval(updateClock,1000);updateClock();
 
@@ -608,19 +688,14 @@ function drawGraph(){
   const W=r.width,H=r.height;ctx.clearRect(0,0,W,H);
   const mx=Math.max(1024,...nD,...nU)*1.2;
   const p={t:8,b:18,l:48,r:8},gW=W-p.l-p.r,gH=H-p.t-p.b;
-
-  // Grid
   ctx.strokeStyle='rgba(45,212,160,0.04)';ctx.lineWidth=1;
   for(let i=0;i<=4;i++){
-    const y=p.t+gH*i/4;
-    ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+gW,y);ctx.stroke();
-    ctx.fillStyle='rgba(130,155,190,0.3)';ctx.font='10px Rajdhani';ctx.textAlign='right';
+    const y=p.t+gH*i/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+gW,y);ctx.stroke();
+    ctx.fillStyle='rgba(120,150,185,0.3)';ctx.font='10px Rajdhani';ctx.textAlign='right';
     ctx.fillText(fmtB(mx*(1-i/4))+'/s',p.l-5,y+4);
   }
-
   function line(data,color,fill){
-    if(data.length<2)return;
-    ctx.beginPath();
+    if(data.length<2)return;ctx.beginPath();
     data.forEach((v,i)=>{const x=p.l+(i/(NP-1))*gW,y=p.t+gH*(1-v/mx);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
     ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
     const lx=p.l+((data.length-1)/(NP-1))*gW;
@@ -637,63 +712,46 @@ function updateUI(d){
   $('cores').textContent=d.cpuCores||'--';
   $('uptime').textContent=d.uptimeSec?fmtUp(d.uptimeSec):'--';
   $('users').textContent=d.users??'--';
-
   const cpu=d.cpuPct||0;
   $('cpu-pct').textContent=cpu.toFixed(1)+'%';
   $('cpu-bar').style.width=cpu+'%';
   $('cpu-bar').className='gauge-bar '+(cpu>80?'c5':cpu>50?'c4':'c1');
-
   const mp=d.memTotal?(d.memUsed/d.memTotal*100):0;
   $('mem-pct').textContent=fmtB(d.memUsed)+' / '+fmtB(d.memTotal);
-  $('mem-bar').style.width=mp+'%';
-  $('mem-bar').className='gauge-bar '+gCls(mp);
-
+  $('mem-bar').style.width=mp+'%';$('mem-bar').className='gauge-bar '+gCls(mp);
   const sp=d.swapTotal?(d.swapUsed/d.swapTotal*100):0;
   $('swap-pct').textContent=fmtB(d.swapUsed)+' / '+fmtB(d.swapTotal);
   $('swap-bar').style.width=sp+'%';
-
   ['cpu','gpu','board','disk'].forEach(k=>{
     const el=$('temp-'+k);el.textContent=tTxt(d.temps?.[k]);el.className='temp-num t-'+tCls(d.temps?.[k]);
   });
-
   if(d.disks?.length){
     $('disk-body').innerHTML=d.disks.map(d=>{
       const p=d.use||0,c=p>85?'c5':p>60?'c4':'c1';
       return`<div class="disk-row"><div class="disk-info"><span>${d.mount}</span><span class="disk-sz">${fmtB(d.used)} / ${fmtB(d.total)}</span></div><div class="gauge-track"><div class="gauge-bar ${c}" style="width:${p}%"></div></div></div>`;
     }).join('');
   }
-
   if(d.processes?.length){
     const sm={S:'Sleep',R:'Run',D:'Disk',Z:'Zomb',T:'Stop'};
     $('proc-body').innerHTML=d.processes.map(p=>`<tr><td class="p-pid">${p.pid}</td><td class="p-name">${p.name}</td><td class="p-cpu">${p.cpu.toFixed(1)}</td><td class="p-mem">${p.mem.toFixed(1)}</td><td>${sm[p.state]||p.state}</td></tr>`).join('');
   }
-
   nD.push(d.netIO?.rx_sec||0);nU.push(d.netIO?.tx_sec||0);
   if(nD.length>NP){nD.shift();nU.shift();}
   drawGraph();
-
   $('load-avg').textContent=d.loadAvg||'--';
   $('net-iface').textContent=(d.netInterfaces||[]).join(', ')||'--';
   $('tcp-count').textContent=d.tcpCount??'--';
-
   if(d.logs?.length){
-    $('log-box').innerHTML=d.logs.map(l=>{
-      const t=new Date().toTimeString().slice(0,8);
-      return`<div class="log-item ${l.type||''}"><span class="log-ts">${t}</span><span class="log-msg">${l.msg}</span></div>`;
-    }).join('');
+    $('log-box').innerHTML=d.logs.map(l=>`<div class="log-item ${l.type||''}"><span class="log-ts">${new Date().toTimeString().slice(0,8)}</span><span class="log-msg">${l.msg}</span></div>`).join('');
   }
 }
 
-function setConn(ok){
-  const el=$('conn-status');
-  el.className='conn-status '+(ok?'online':'offline');
-  el.querySelector('span').textContent=ok?'ONLINE':'OFFLINE';
-}
+function setConn(ok){const el=$('conn-status');el.className='conn-status '+(ok?'online':'offline');el.querySelector('span').textContent=ok?'ONLINE':'OFFLINE';}
 
 function connectWS(){
   const proto=location.protocol==='https:'?'wss:':'ws:';
   const ws=new WebSocket(`${proto}//${location.host}/ws`);
-  ws.onopen=()=>{setConn(true);};
+  ws.onopen=()=>setConn(true);
   ws.onmessage=e=>{try{const d=JSON.parse(e.data);if(!d.error)updateUI(d);}catch(err){}};
   ws.onclose=()=>{setConn(false);setTimeout(connectWS,5000);};
   ws.onerror=()=>ws.close();

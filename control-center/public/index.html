@@ -3,33 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>中枢控制台 — RHODES ISLAND</title>
+<title>中枢控制台 — RHINE LAB</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 
 :root {
-  --bg: #0a0c10;
-  --bg-panel: rgba(12,16,22,0.92);
-  --accent: #e8a735;
-  --accent-dim: rgba(232,167,53,0.15);
-  --accent-glow: rgba(232,167,53,0.4);
-  --cyan: #3de8e0;
-  --cyan-dim: rgba(61,232,224,0.12);
-  --red: #e84545;
-  --red-dim: rgba(232,69,69,0.15);
-  --green: #45e88a;
-  --green-dim: rgba(69,232,138,0.15);
-  --yellow: #e8d445;
-  --text: rgba(255,255,255,0.78);
-  --text-dim: rgba(255,255,255,0.35);
-  --text-bright: rgba(255,255,255,0.95);
-  --border: rgba(232,167,53,0.12);
-  --border-bright: rgba(232,167,53,0.35);
-  --font-display: 'Orbitron', monospace;
+  --bg: #0b1120;
+  --bg-deep: #070d1a;
+  --bg-panel: rgba(14,24,48,0.85);
+  --bg-panel-hover: rgba(18,30,56,0.9);
+  --accent: #00d4c8;
+  --accent-dim: rgba(0,212,200,0.12);
+  --accent-glow: rgba(0,212,200,0.35);
+  --accent-soft: #4fd1c5;
+  --blue: #6ba3d6;
+  --blue-dim: rgba(107,163,214,0.12);
+  --red: #f06565;
+  --red-dim: rgba(240,101,101,0.15);
+  --green: #48d89b;
+  --green-dim: rgba(72,216,155,0.15);
+  --amber: #f0b429;
+  --amber-dim: rgba(240,180,41,0.15);
+  --text: rgba(200,215,235,0.82);
+  --text-dim: rgba(140,165,200,0.5);
+  --text-bright: rgba(230,240,255,0.95);
+  --border: rgba(0,212,200,0.1);
+  --border-bright: rgba(0,212,200,0.3);
+  --glass: rgba(20,40,80,0.4);
+  --font-display: 'Rajdhani', sans-serif;
   --font-ui: 'Noto Sans SC', sans-serif;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:14px; }
 body {
   background: var(--bg);
   font-family: var(--font-ui);
@@ -38,196 +44,227 @@ body {
   overflow-x: hidden;
 }
 
-body::after {
-  content:''; position:fixed; inset:0; z-index:9999; pointer-events:none;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-}
-
+/* Subtle hex grid pattern */
 body::before {
   content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background-image: radial-gradient(circle at 50% 50%, rgba(232,167,53,0.02) 0%, transparent 70%);
+  opacity:0.03;
+  background-image:
+    linear-gradient(30deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
+    linear-gradient(150deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
+    linear-gradient(30deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
+    linear-gradient(150deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
+    linear-gradient(60deg, rgba(0,212,200,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,212,200,0.5) 75%, rgba(0,212,200,0.5)),
+    linear-gradient(60deg, rgba(0,212,200,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,212,200,0.5) 75%, rgba(0,212,200,0.5));
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+
+/* Ambient glow */
+body::after {
+  content:''; position:fixed; top:-30%; left:50%; transform:translateX(-50%);
+  width:80%; height:60%; z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse, rgba(0,212,200,0.04) 0%, transparent 70%);
 }
 
 .dashboard {
-  position: relative; z-index: 1;
-  max-width: 1440px; margin: 0 auto; padding: 16px;
-  display: grid;
-  grid-template-columns: 280px 1fr 280px;
-  grid-template-rows: auto 1fr;
-  gap: 12px;
-  min-height: 100vh;
+  position:relative; z-index:1;
+  max-width:1460px; margin:0 auto; padding:14px;
+  display:grid;
+  grid-template-columns:270px 1fr 270px;
+  grid-template-rows:auto 1fr;
+  gap:10px;
+  min-height:100vh;
 }
 
+/* === HEADER === */
 .header {
-  grid-column: 1 / -1;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 20px;
+  grid-column:1/-1;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 24px;
   background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-bottom: 2px solid var(--accent);
-  position: relative;
+  backdrop-filter: blur(12px);
+  border:1px solid var(--border);
+  border-radius:2px;
+  position:relative;
 }
-.header::before {
-  content:''; position:absolute; bottom:-2px; left:0; right:0; height:2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  box-shadow: 0 0 12px var(--accent-glow);
+.header::after {
+  content:''; position:absolute; bottom:0; left:24px; right:24px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
 }
 .header-left { display:flex; align-items:center; gap:16px; }
 .header-logo {
-  font-family: var(--font-display); font-size:13px; font-weight:700;
-  color: var(--accent); letter-spacing:3px; text-transform:uppercase;
+  font-family:var(--font-display); font-size:18px; font-weight:700;
+  color:var(--accent); letter-spacing:4px; text-transform:uppercase;
 }
-.header-subtitle {
-  font-size:11px; color: var(--text-dim); letter-spacing:1px;
+.header-sub {
+  font-size:11px; color:var(--text-dim); letter-spacing:1.5px;
   border-left:1px solid var(--border-bright); padding-left:16px;
+  font-family:var(--font-display);
 }
 .header-right { display:flex; align-items:center; gap:20px; }
-.header-status {
-  display:flex; align-items:center; gap:6px; font-size:11px;
-  font-family: var(--font-display);
+.conn-status {
+  display:flex; align-items:center; gap:6px;
+  font-family:var(--font-display); font-size:11px; letter-spacing:1px;
 }
-.header-status.online { color: var(--green); }
-.header-status.offline { color: var(--red); }
-.header-status .dot {
+.conn-status.online { color:var(--green); }
+.conn-status.offline { color:var(--red); }
+.conn-dot {
   width:6px; height:6px; border-radius:50%;
 }
-.header-status.online .dot { background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse-dot 2s ease-in-out infinite; }
-.header-status.offline .dot { background:var(--red); box-shadow:0 0 6px var(--red); }
-@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
-.header-time {
-  font-family: var(--font-display); font-size:14px; font-weight:700;
-  color: var(--text-bright); letter-spacing:2px;
+.conn-status.online .conn-dot { background:var(--green); box-shadow:0 0 8px var(--green); animation:blink 2s ease-in-out infinite; }
+.conn-status.offline .conn-dot { background:var(--red); box-shadow:0 0 8px var(--red); }
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+.clock-time {
+  font-family:var(--font-display); font-size:22px; font-weight:600;
+  color:var(--text-bright); letter-spacing:3px;
 }
-.header-date { font-size:11px; color:var(--text-dim); }
+.clock-date { font-family:var(--font-display); font-size:11px; color:var(--text-dim); letter-spacing:1px; }
 
+/* === PANEL === */
 .panel {
   background: var(--bg-panel);
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border:1px solid var(--border);
+  border-radius:2px;
+  position:relative;
+  overflow:hidden;
 }
 .panel::before {
-  content:''; position:absolute; top:0; left:0; width:3px; height:100%;
+  content:''; position:absolute; top:0; left:0; bottom:0; width:2px;
+  background:linear-gradient(180deg, var(--accent), transparent);
+  opacity:0.6;
+}
+.panel-hex {
+  position:absolute; top:6px; right:8px; width:18px; height:18px;
+  opacity:0.15; pointer-events:none;
   background: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 .panel-head {
-  padding: 12px 16px 10px 20px;
-  font-family: var(--font-display);
-  font-size: 10px; font-weight:700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items:center; gap:8px;
+  padding:10px 16px 8px 18px;
+  font-family:var(--font-display);
+  font-size:11px; font-weight:600; letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:var(--accent-soft);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:8px;
 }
-.panel-head .icon { font-size:14px; opacity:0.7; }
-.panel-body { padding: 12px 16px; }
-
-.panel-corner-tr, .panel-corner-bl {
-  position:absolute; width:12px; height:12px; pointer-events:none;
+.panel-head .tag {
+  font-size:9px; padding:1px 6px; border:1px solid var(--border-bright);
+  border-radius:1px; color:var(--accent); letter-spacing:1px;
+  font-weight:400;
 }
-.panel-corner-tr { top:-1px; right:-1px; border-top:2px solid var(--accent); border-right:2px solid var(--accent); }
-.panel-corner-bl { bottom:-1px; left:-1px; border-bottom:2px solid var(--accent); border-left:2px solid var(--accent); }
+.panel-body { padding:10px 16px; }
 
-.left-col { display:flex; flex-direction:column; gap:12px; }
+/* === LAYOUT === */
+.left-col, .right-col { display:flex; flex-direction:column; gap:10px; }
+.center-col { display:flex; flex-direction:column; gap:10px; }
 
-.sys-item {
+/* === SYS ITEMS === */
+.sys-row {
   display:flex; justify-content:space-between; align-items:center;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  font-size: 12px;
+  padding:6px 0; border-bottom:1px solid rgba(0,212,200,0.04);
+  font-size:12px;
 }
-.sys-item:last-child { border-bottom:none; }
-.sys-label { color: var(--text-dim); }
-.sys-value { font-family: var(--font-display); font-size:11px; color: var(--text-bright); }
+.sys-row:last-child { border-bottom:none; }
+.sys-key { color:var(--text-dim); }
+.sys-val { font-family:var(--font-display); font-size:12px; font-weight:500; color:var(--text-bright); letter-spacing:0.5px; }
 
-.gauge-wrap { margin: 8px 0; }
-.gauge-label { display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px; }
-.gauge-label span:first-child { color:var(--text-dim); }
-.gauge-label span:last-child { font-family:var(--font-display); color:var(--text-bright); font-size:10px; }
+/* === GAUGES === */
+.gauge { margin:6px 0; }
+.gauge-head { display:flex; justify-content:space-between; font-size:11px; margin-bottom:3px; }
+.gauge-head .label { color:var(--text-dim); }
+.gauge-head .value { font-family:var(--font-display); font-size:11px; font-weight:600; color:var(--text-bright); }
 .gauge-track {
-  height:6px; background:rgba(255,255,255,0.05); border-radius:1px; position:relative; overflow:hidden;
+  height:4px; background:rgba(255,255,255,0.04); border-radius:2px;
+  overflow:hidden; position:relative;
 }
-.gauge-fill {
-  height:100%; border-radius:1px; transition: width 1s ease, background 0.5s;
+.gauge-bar {
+  height:100%; border-radius:2px; transition:width 1s ease;
 }
-.gauge-fill.green { background: linear-gradient(90deg, #2a8a4a, var(--green)); box-shadow: 0 0 6px rgba(69,232,138,0.3); }
-.gauge-fill.amber { background: linear-gradient(90deg, #8a6a2a, var(--accent)); box-shadow: 0 0 6px var(--accent-glow); }
-.gauge-fill.red { background: linear-gradient(90deg, #8a2a2a, var(--red)); box-shadow: 0 0 6px rgba(232,69,69,0.3); }
-.gauge-fill.cyan { background: linear-gradient(90deg, #2a6a6a, var(--cyan)); box-shadow: 0 0 6px rgba(61,232,224,0.3); }
+.gauge-bar.c1 { background:linear-gradient(90deg,#0a6e68,var(--accent)); box-shadow:0 0 8px var(--accent-dim); }
+.gauge-bar.c2 { background:linear-gradient(90deg,#2a6a9a,var(--blue)); box-shadow:0 0 8px var(--blue-dim); }
+.gauge-bar.c3 { background:linear-gradient(90deg,#2a7a4a,var(--green)); box-shadow:0 0 8px var(--green-dim); }
+.gauge-bar.c4 { background:linear-gradient(90deg,#8a5a2a,var(--amber)); box-shadow:0 0 8px var(--amber-dim); }
+.gauge-bar.c5 { background:linear-gradient(90deg,#8a2a2a,var(--red)); box-shadow:0 0 8px var(--red-dim); }
 
-.center-col { display:flex; flex-direction:column; gap:12px; }
-
-.graph-container { width:100%; height:180px; position:relative; }
-.graph-container canvas { width:100%; height:100%; }
-.graph-legend {
-  position:absolute; bottom:8px; right:12px;
-  display:flex; gap:12px; font-size:10px;
-}
-.graph-legend span { display:flex; align-items:center; gap:4px; color:var(--text-dim); }
-.graph-legend .leg-dot { width:8px; height:3px; border-radius:1px; }
-
-.proc-table { width:100%; font-size:11px; border-collapse:collapse; }
-.proc-table thead th {
-  text-align:left; padding:6px 8px; font-family:var(--font-display);
-  font-size:9px; letter-spacing:1px; color:var(--accent);
-  border-bottom:1px solid var(--border); text-transform:uppercase;
-}
-.proc-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.03); transition: background 0.2s; }
-.proc-table tbody tr:hover { background:rgba(232,167,53,0.04); }
-.proc-table tbody td { padding:6px 8px; font-family:var(--font-display); font-size:10px; color:var(--text); }
-.proc-table .pid { color:var(--text-dim); }
-.proc-table .cpu { color: var(--cyan); }
-.proc-table .mem { color: var(--accent); }
-.proc-table .name { color:var(--text-bright); font-family:var(--font-ui); font-size:11px; }
-
-.right-col { display:flex; flex-direction:column; gap:12px; }
-
-.log-list { max-height:300px; overflow-y:auto; }
-.log-list::-webkit-scrollbar { width:3px; }
-.log-list::-webkit-scrollbar-thumb { background:var(--accent-dim); }
-.log-entry {
-  padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.03);
-  font-size:10px; line-height:1.5;
-}
-.log-time { font-family:var(--font-display); font-size:9px; color:var(--accent); margin-right:6px; }
-.log-msg { color:var(--text-dim); }
-.log-entry.warn .log-msg { color:var(--accent); }
-.log-entry.error .log-msg { color:var(--red); }
-.log-entry.ok .log-msg { color:var(--green); }
-
-.disk-item { margin:10px 0; }
-.disk-name { font-size:12px; color:var(--text-bright); margin-bottom:2px; display:flex; justify-content:space-between; }
-.disk-size { font-family:var(--font-display); font-size:10px; color:var(--text-dim); }
-
-.temp-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+/* === TEMPS === */
+.temp-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
 .temp-card {
-  padding:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04);
+  padding:8px 6px; background:rgba(0,212,200,0.03);
+  border:1px solid rgba(0,212,200,0.06); border-radius:2px;
   text-align:center;
 }
-.temp-val { font-family:var(--font-display); font-size:20px; font-weight:700; margin:4px 0; }
-.temp-label { font-size:10px; color:var(--text-dim); }
-.temp-val.cool { color:var(--cyan); }
-.temp-val.warm { color:var(--accent); }
-.temp-val.hot { color:var(--red); }
-.temp-val.na { color:var(--text-dim); font-size:12px; }
+.temp-lbl { font-family:var(--font-display); font-size:9px; letter-spacing:1.5px; color:var(--text-dim); text-transform:uppercase; }
+.temp-num { font-family:var(--font-display); font-size:20px; font-weight:700; margin:2px 0; }
+.temp-num.t-cool { color:var(--accent); }
+.temp-num.t-warm { color:var(--amber); }
+.temp-num.t-hot { color:var(--red); }
+.temp-num.t-na { color:var(--text-dim); font-size:12px; }
 
-.uptime-bar {
-  grid-column: 1 / -1;
-  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
-  padding: 8px 20px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  font-size:11px; color:var(--text-dim);
+/* === GRAPH === */
+.graph-wrap { width:100%; height:170px; position:relative; }
+.graph-wrap canvas { width:100%; height:100%; }
+.graph-legend {
+  position:absolute; bottom:6px; right:10px;
+  display:flex; gap:14px; font-size:10px; font-family:var(--font-display); letter-spacing:1px;
 }
-.uptime-label { font-family:var(--font-display); font-size:9px; letter-spacing:1px; color:var(--accent); }
-.uptime-val { font-family:var(--font-display); font-size:11px; color:var(--text-bright); }
-.uptime-sep { width:1px; height:16px; background:var(--border-bright); }
+.graph-legend span { display:flex; align-items:center; gap:5px; color:var(--text-dim); }
+.leg-line { width:10px; height:2px; border-radius:1px; }
 
-@media (max-width:1100px) {
+/* === TABLE === */
+.proc-tbl { width:100%; font-size:11px; border-collapse:collapse; }
+.proc-tbl thead th {
+  text-align:left; padding:5px 8px; font-family:var(--font-display);
+  font-size:9px; letter-spacing:1.5px; color:var(--accent-soft);
+  border-bottom:1px solid var(--border); text-transform:uppercase; font-weight:500;
+}
+.proc-tbl tbody tr { border-bottom:1px solid rgba(0,212,200,0.03); transition:background 0.15s; }
+.proc-tbl tbody tr:hover { background:rgba(0,212,200,0.04); }
+.proc-tbl td { padding:5px 8px; font-family:var(--font-display); font-size:11px; }
+.proc-tbl .p-pid { color:var(--text-dim); font-size:10px; }
+.proc-tbl .p-name { color:var(--text-bright); font-family:var(--font-ui); font-size:12px; }
+.proc-tbl .p-cpu { color:var(--accent); }
+.proc-tbl .p-mem { color:var(--blue); }
+
+/* === LOGS === */
+.log-box { max-height:300px; overflow-y:auto; }
+.log-box::-webkit-scrollbar { width:3px; }
+.log-box::-webkit-scrollbar-thumb { background:var(--accent-dim); border-radius:2px; }
+.log-item {
+  padding:5px 0; border-bottom:1px solid rgba(0,212,200,0.03);
+  font-size:10px; line-height:1.5;
+}
+.log-ts { font-family:var(--font-display); font-size:9px; color:var(--accent); margin-right:6px; letter-spacing:0.5px; }
+.log-msg { color:var(--text-dim); }
+.log-item.warn .log-msg { color:var(--amber); }
+.log-item.error .log-msg { color:var(--red); }
+.log-item.ok .log-msg { color:var(--green); }
+
+/* === DISK === */
+.disk-row { margin:8px 0; }
+.disk-info { font-size:11px; color:var(--text-bright); margin-bottom:2px; display:flex; justify-content:space-between; }
+.disk-sz { font-family:var(--font-display); font-size:10px; color:var(--text-dim); }
+
+/* === FOOTER === */
+.footer-bar {
+  grid-column:1/-1;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding:7px 24px;
+  background:var(--bg-panel);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--border);
+  border-radius:2px;
+  font-size:11px; color:var(--text-dim);
+  font-family:var(--font-display); letter-spacing:0.5px;
+}
+.footer-label { color:var(--accent-soft); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; }
+.footer-val { color:var(--text-bright); font-weight:500; }
+.footer-sep { width:1px; height:14px; background:var(--border-bright); }
+
+@media(max-width:1100px){
   .dashboard { grid-template-columns:1fr; }
-  .left-col, .right-col { display:none; }
+  .left-col,.right-col { display:none; }
   .header { flex-wrap:wrap; gap:8px; }
 }
 </style>
@@ -235,306 +272,244 @@ body::before {
 <body>
 
 <div class="dashboard">
+
   <div class="header">
     <div class="header-left">
-      <div class="header-logo">Rhodes Island</div>
-      <div class="header-subtitle">中枢控制系统 v2.7 // INFRASTRUCTURE MONITOR</div>
+      <div class="header-logo">Rhine Lab</div>
+      <div class="header-sub">INFRASTRUCTURE MONITORING SYSTEM</div>
     </div>
     <div class="header-right">
-      <div class="header-status" id="conn-status"><div class="dot"></div><span>CONNECTING</span></div>
-      <div>
-        <div class="header-time" id="clock">--:--:--</div>
-        <div class="header-date" id="date">----.--.--</div>
+      <div class="conn-status" id="conn-status"><div class="conn-dot"></div><span>CONNECTING</span></div>
+      <div style="text-align:right">
+        <div class="clock-time" id="clock">--:--:--</div>
+        <div class="clock-date" id="date">----/--/--</div>
       </div>
     </div>
   </div>
 
+  <!-- LEFT -->
   <div class="left-col">
     <div class="panel">
-      <div class="panel-head"><span class="icon">◆</span> 系统概览</div>
+      <div class="panel-hex"></div>
+      <div class="panel-head">系统概览 <span class="tag">SYSTEM</span></div>
       <div class="panel-body">
-        <div class="sys-item"><span class="sys-label">主机名</span><span class="sys-value" id="hostname">---</span></div>
-        <div class="sys-item"><span class="sys-label">内核</span><span class="sys-value" id="kernel">---</span></div>
-        <div class="sys-item"><span class="sys-label">架构</span><span class="sys-value" id="arch">---</span></div>
-        <div class="sys-item"><span class="sys-label">CPU 核心</span><span class="sys-value" id="cores">---</span></div>
-        <div class="sys-item"><span class="sys-label">运行时间</span><span class="sys-value" id="uptime">---</span></div>
-        <div class="sys-item"><span class="sys-label">在线用户</span><span class="sys-value" id="users">---</span></div>
+        <div class="sys-row"><span class="sys-key">主机名</span><span class="sys-val" id="hostname">---</span></div>
+        <div class="sys-row"><span class="sys-key">内核</span><span class="sys-val" id="kernel">---</span></div>
+        <div class="sys-row"><span class="sys-key">架构</span><span class="sys-val" id="arch">---</span></div>
+        <div class="sys-row"><span class="sys-key">CPU 核心</span><span class="sys-val" id="cores">---</span></div>
+        <div class="sys-row"><span class="sys-key">运行时间</span><span class="sys-val" id="uptime">---</span></div>
+        <div class="sys-row"><span class="sys-key">在线用户</span><span class="sys-val" id="users">---</span></div>
       </div>
-      <div class="panel-corner-tr"></div><div class="panel-corner-bl"></div>
     </div>
 
     <div class="panel">
-      <div class="panel-head"><span class="icon">◈</span> 资源占用</div>
+      <div class="panel-hex"></div>
+      <div class="panel-head">资源占用 <span class="tag">RESOURCE</span></div>
       <div class="panel-body">
-        <div class="gauge-wrap">
-          <div class="gauge-label"><span>CPU 使用率</span><span id="cpu-pct">--%</span></div>
-          <div class="gauge-track"><div class="gauge-fill cyan" id="cpu-bar" style="width:0%"></div></div>
+        <div class="gauge">
+          <div class="gauge-head"><span class="label">CPU</span><span class="value" id="cpu-pct">--%</span></div>
+          <div class="gauge-track"><div class="gauge-bar c1" id="cpu-bar" style="width:0%"></div></div>
         </div>
-        <div class="gauge-wrap">
-          <div class="gauge-label"><span>内存</span><span id="mem-pct">-- / --</span></div>
-          <div class="gauge-track"><div class="gauge-fill amber" id="mem-bar" style="width:0%"></div></div>
+        <div class="gauge">
+          <div class="gauge-head"><span class="label">内存</span><span class="value" id="mem-pct">-- / --</span></div>
+          <div class="gauge-track"><div class="gauge-bar c2" id="mem-bar" style="width:0%"></div></div>
         </div>
-        <div class="gauge-wrap">
-          <div class="gauge-label"><span>Swap</span><span id="swap-pct">-- / --</span></div>
-          <div class="gauge-track"><div class="gauge-fill green" id="swap-bar" style="width:0%"></div></div>
+        <div class="gauge">
+          <div class="gauge-head"><span class="label">Swap</span><span class="value" id="swap-pct">-- / --</span></div>
+          <div class="gauge-track"><div class="gauge-bar c3" id="swap-bar" style="width:0%"></div></div>
         </div>
       </div>
-      <div class="panel-corner-tr"></div><div class="panel-corner-bl"></div>
     </div>
 
     <div class="panel">
-      <div class="panel-head"><span class="icon">◈</span> 温度监测</div>
+      <div class="panel-hex"></div>
+      <div class="panel-head">温度监测 <span class="tag">THERMAL</span></div>
       <div class="panel-body">
         <div class="temp-grid">
-          <div class="temp-card"><div class="temp-label">CPU</div><div class="temp-val na" id="temp-cpu">--°C</div></div>
-          <div class="temp-card"><div class="temp-label">GPU</div><div class="temp-val na" id="temp-gpu">--°C</div></div>
-          <div class="temp-card"><div class="temp-label">主板</div><div class="temp-val na" id="temp-board">--°C</div></div>
-          <div class="temp-card"><div class="temp-label">存储</div><div class="temp-val na" id="temp-disk">--°C</div></div>
+          <div class="temp-card"><div class="temp-lbl">CPU</div><div class="temp-num t-na" id="temp-cpu">--</div></div>
+          <div class="temp-card"><div class="temp-lbl">GPU</div><div class="temp-num t-na" id="temp-gpu">--</div></div>
+          <div class="temp-card"><div class="temp-lbl">Board</div><div class="temp-num t-na" id="temp-board">--</div></div>
+          <div class="temp-card"><div class="temp-lbl">Disk</div><div class="temp-num t-na" id="temp-disk">--</div></div>
         </div>
       </div>
-      <div class="panel-corner-tr"></div><div class="panel-corner-bl"></div>
     </div>
   </div>
 
+  <!-- CENTER -->
   <div class="center-col">
     <div class="panel">
-      <div class="panel-head"><span class="icon">◈</span> 网络 I/O <span style="margin-left:auto;font-size:9px;color:var(--text-dim)">实时流量 · 60s</span></div>
+      <div class="panel-hex"></div>
+      <div class="panel-head">网络 I/O <span class="tag">NETWORK</span> <span style="margin-left:auto;font-size:9px;color:var(--text-dim)">60s WINDOW</span></div>
       <div class="panel-body">
-        <div class="graph-container">
+        <div class="graph-wrap">
           <canvas id="net-graph"></canvas>
           <div class="graph-legend">
-            <span><div class="leg-dot" style="background:var(--cyan)"></div>下载 ↓</span>
-            <span><div class="leg-dot" style="background:var(--accent)"></div>上传 ↑</span>
+            <span><div class="leg-line" style="background:var(--accent)"></div>RX ↓</span>
+            <span><div class="leg-line" style="background:var(--blue)"></div>TX ↑</span>
           </div>
         </div>
       </div>
-      <div class="panel-corner-tr"></div><div class="panel-corner-bl"></div>
     </div>
 
     <div class="panel" style="flex:1">
-      <div class="panel-head"><span class="icon">◈</span> 进程 TOP 10</div>
+      <div class="panel-hex"></div>
+      <div class="panel-head">活跃进程 <span class="tag">PROCESS</span></div>
       <div class="panel-body" style="padding:0">
-        <table class="proc-table">
+        <table class="proc-tbl">
           <thead><tr><th>PID</th><th>进程</th><th>CPU%</th><th>MEM%</th><th>状态</th></tr></thead>
           <tbody id="proc-body"><tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-dim)">等待数据...</td></tr></tbody>
         </table>
       </div>
-      <div class="panel-corner-tr"></div><div class="panel-corner-bl"></div>
     </div>
   </div>
 
+  <!-- RIGHT -->
   <div class="right-col">
     <div class="panel">
-      <div class="panel-head"><span class="icon">◈</span> 存储设备</div>
+      <div class="panel-hex"></div>
+      <div class="panel-head">存储设备 <span class="tag">STORAGE</span></div>
       <div class="panel-body" id="disk-body"><span style="color:var(--text-dim);font-size:11px">等待数据...</span></div>
-      <div class="panel-corner-tr"></div><div class="panel-corner-bl"></div>
     </div>
     <div class="panel" style="flex:1">
-      <div class="panel-head"><span class="icon">◈</span> 系统日志</div>
+      <div class="panel-hex"></div>
+      <div class="panel-head">系统日志 <span class="tag">LOG</span></div>
       <div class="panel-body">
-        <div class="log-list" id="log-list"><span style="color:var(--text-dim);font-size:11px">等待数据...</span></div>
+        <div class="log-box" id="log-box"><span style="color:var(--text-dim);font-size:11px">等待数据...</span></div>
       </div>
-      <div class="panel-corner-tr"></div><div class="panel-corner-bl"></div>
     </div>
   </div>
 
-  <div class="uptime-bar">
-    <span class="uptime-label">SYSTEM</span>
-    <span>负载均值:</span><span class="uptime-val" id="load-avg">--</span>
-    <div class="uptime-sep"></div>
-    <span>网络接口:</span><span class="uptime-val" id="net-iface">--</span>
-    <div class="uptime-sep"></div>
-    <span>TCP连接:</span><span class="uptime-val" id="tcp-count">--</span>
-    <div class="uptime-sep"></div>
-    <span>刷新周期:</span><span class="uptime-val">3s (WebSocket)</span>
+  <!-- FOOTER -->
+  <div class="footer-bar">
+    <span class="footer-label">SYS</span>
+    <span>LOAD:</span><span class="footer-val" id="load-avg">--</span>
+    <div class="footer-sep"></div>
+    <span>IFACE:</span><span class="footer-val" id="net-iface">--</span>
+    <div class="footer-sep"></div>
+    <span>TCP:</span><span class="footer-val" id="tcp-count">--</span>
+    <div class="footer-sep"></div>
+    <span>INTERVAL:</span><span class="footer-val">3s · WS</span>
   </div>
+
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
-// Clock
-function updateClock() {
-  const now = new Date();
-  $('clock').textContent = now.toTimeString().slice(0,8);
-  const y=now.getFullYear(), m=String(now.getMonth()+1).padStart(2,'0'), d=String(now.getDate()).padStart(2,'0');
-  const days=['日','一','二','三','四','五','六'];
-  $('date').textContent = `${y}.${m}.${d} 星期${days[now.getDay()]}`;
+function updateClock(){
+  const n=new Date();
+  $('clock').textContent=n.toTimeString().slice(0,8);
+  const y=n.getFullYear(),m=String(n.getMonth()+1).padStart(2,'0'),d=String(n.getDate()).padStart(2,'0');
+  const days=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  $('date').textContent=`${y}/${m}/${d} ${days[n.getDay()]}`;
 }
-setInterval(updateClock, 1000);
-updateClock();
+setInterval(updateClock,1000);updateClock();
 
-// Helpers
-function fmtBytes(b) {
-  if(!b||b<0) return '0B';
-  if(b<1024) return b.toFixed(0)+'B';
-  if(b<1048576) return (b/1024).toFixed(1)+'K';
-  if(b<1073741824) return (b/1048576).toFixed(1)+'M';
-  return (b/1073741824).toFixed(1)+'G';
-}
-function fmtUptime(s) {
-  const d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60);
-  return `${d}d ${h}h ${m}m`;
-}
-function tempClass(t) { if(t===null||t===undefined) return 'na'; return t<45?'cool':t<70?'warm':'hot'; }
-function tempText(t) { return (t===null||t===undefined)?'N/A':Math.round(t)+'°C'; }
-function gaugeColor(pct) { return pct>80?'red':pct>50?'amber':'green'; }
+function fmtB(b){if(!b||b<0)return'0B';if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'K';if(b<1073741824)return(b/1048576).toFixed(1)+'M';return(b/1073741824).toFixed(1)+'G';}
+function fmtUp(s){const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return`${d}d ${h}h ${m}m`;}
+function tCls(t){return t===null||t===undefined?'na':t<45?'cool':t<70?'warm':'hot';}
+function tTxt(t){return t===null||t===undefined?'N/A':Math.round(t)+'°C';}
+function gCls(p){return p>80?'c5':p>50?'c4':'c2';}
 
-// Network graph
-const netDown=[], netUp=[];
-const NET_POINTS=60;
+const nD=[],nU=[];const NP=60;
 
-function drawGraph() {
-  const canvas=$('net-graph');
-  const rect=canvas.parentElement.getBoundingClientRect();
-  canvas.width=rect.width*devicePixelRatio;
-  canvas.height=rect.height*devicePixelRatio;
-  canvas.style.width=rect.width+'px';
-  canvas.style.height=rect.height+'px';
-  const ctx=canvas.getContext('2d');
-  ctx.scale(devicePixelRatio,devicePixelRatio);
-  const W=rect.width, H=rect.height;
-  ctx.clearRect(0,0,W,H);
+function drawGraph(){
+  const c=$('net-graph'),r=c.parentElement.getBoundingClientRect();
+  c.width=r.width*devicePixelRatio;c.height=r.height*devicePixelRatio;
+  c.style.width=r.width+'px';c.style.height=r.height+'px';
+  const ctx=c.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
+  const W=r.width,H=r.height;ctx.clearRect(0,0,W,H);
+  const mx=Math.max(1024,...nD,...nU)*1.2;
+  const p={t:8,b:18,l:48,r:8},gW=W-p.l-p.r,gH=H-p.t-p.b;
 
-  const maxVal=Math.max(1024,...netDown,...netUp)*1.2;
-  const pad={t:10,b:20,l:50,r:10};
-  const gW=W-pad.l-pad.r, gH=H-pad.t-pad.b;
-
-  ctx.strokeStyle='rgba(255,255,255,0.04)';
-  ctx.lineWidth=1;
+  ctx.strokeStyle='rgba(0,212,200,0.04)';ctx.lineWidth=1;
   for(let i=0;i<=4;i++){
-    const y=pad.t+gH*i/4;
-    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gW,y);ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,0.2)';
-    ctx.font='9px Orbitron';
-    ctx.textAlign='right';
-    ctx.fillText(fmtBytes(maxVal*(1-i/4))+'/s',pad.l-6,y+3);
+    const y=p.t+gH*i/4;
+    ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+gW,y);ctx.stroke();
+    ctx.fillStyle='rgba(140,165,200,0.25)';ctx.font='10px Rajdhani';ctx.textAlign='right';
+    ctx.fillText(fmtB(mx*(1-i/4))+'/s',p.l-5,y+4);
   }
 
-  function drawLine(data,color,fillColor){
+  function line(data,color,fill){
     if(data.length<2)return;
     ctx.beginPath();
-    data.forEach((v,i)=>{
-      const x=pad.l+(i/(NET_POINTS-1))*gW;
-      const y=pad.t+gH*(1-v/maxVal);
-      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    });
+    data.forEach((v,i)=>{const x=p.l+(i/(NP-1))*gW,y=p.t+gH*(1-v/mx);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
     ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
-    const lastX=pad.l+((data.length-1)/(NET_POINTS-1))*gW;
-    ctx.lineTo(lastX,pad.t+gH);ctx.lineTo(pad.l,pad.t+gH);ctx.closePath();
-    ctx.fillStyle=fillColor;ctx.fill();
+    const lx=p.l+((data.length-1)/(NP-1))*gW;
+    ctx.lineTo(lx,p.t+gH);ctx.lineTo(p.l,p.t+gH);ctx.closePath();ctx.fillStyle=fill;ctx.fill();
   }
-  drawLine(netDown,'#3de8e0','rgba(61,232,224,0.08)');
-  drawLine(netUp,'#e8a735','rgba(232,167,53,0.08)');
+  line(nD,'#00d4c8','rgba(0,212,200,0.06)');
+  line(nU,'#6ba3d6','rgba(107,163,214,0.06)');
 }
 
-// Update UI from server data
-function updateUI(data) {
-  $('hostname').textContent = data.hostname || '--';
-  $('kernel').textContent = data.kernel || '--';
-  $('arch').textContent = data.arch || '--';
-  $('cores').textContent = data.cpuCores || '--';
-  $('uptime').textContent = data.uptimeSec ? fmtUptime(data.uptimeSec) : '--';
-  $('users').textContent = data.users ?? '--';
+function updateUI(d){
+  $('hostname').textContent=d.hostname||'--';
+  $('kernel').textContent=d.kernel||'--';
+  $('arch').textContent=d.arch||'--';
+  $('cores').textContent=d.cpuCores||'--';
+  $('uptime').textContent=d.uptimeSec?fmtUp(d.uptimeSec):'--';
+  $('users').textContent=d.users??'--';
 
-  const cpuPct = data.cpuPct ?? 0;
-  $('cpu-pct').textContent = cpuPct.toFixed(1)+'%';
-  $('cpu-bar').style.width = cpuPct+'%';
-  $('cpu-bar').className = 'gauge-fill ' + (cpuPct>80?'red':cpuPct>50?'amber':'cyan');
+  const cpu=d.cpuPct||0;
+  $('cpu-pct').textContent=cpu.toFixed(1)+'%';
+  $('cpu-bar').style.width=cpu+'%';
+  $('cpu-bar').className='gauge-bar '+(cpu>80?'c5':cpu>50?'c4':'c1');
 
-  const memPctVal = data.memTotal ? (data.memUsed/data.memTotal*100) : 0;
-  $('mem-pct').textContent = fmtBytes(data.memUsed)+' / '+fmtBytes(data.memTotal);
-  $('mem-bar').style.width = memPctVal+'%';
-  $('mem-bar').className = 'gauge-fill ' + gaugeColor(memPctVal);
+  const mp=d.memTotal?(d.memUsed/d.memTotal*100):0;
+  $('mem-pct').textContent=fmtB(d.memUsed)+' / '+fmtB(d.memTotal);
+  $('mem-bar').style.width=mp+'%';
+  $('mem-bar').className='gauge-bar '+gCls(mp);
 
-  const swapPctVal = data.swapTotal ? (data.swapUsed/data.swapTotal*100) : 0;
-  $('swap-pct').textContent = fmtBytes(data.swapUsed)+' / '+fmtBytes(data.swapTotal);
-  $('swap-bar').style.width = swapPctVal+'%';
-  $('swap-bar').className = 'gauge-fill ' + gaugeColor(swapPctVal);
+  const sp=d.swapTotal?(d.swapUsed/d.swapTotal*100):0;
+  $('swap-pct').textContent=fmtB(d.swapUsed)+' / '+fmtB(d.swapTotal);
+  $('swap-bar').style.width=sp+'%';
 
-  // Temperatures
-  ['cpu','gpu','board','disk'].forEach(k => {
-    const el = $('temp-'+k);
-    el.textContent = tempText(data.temps?.[k]);
-    el.className = 'temp-val ' + tempClass(data.temps?.[k]);
+  ['cpu','gpu','board','disk'].forEach(k=>{
+    const el=$('temp-'+k);el.textContent=tTxt(d.temps?.[k]);el.className='temp-num t-'+tCls(d.temps?.[k]);
   });
 
-  // Disks
-  if(data.disks?.length) {
-    $('disk-body').innerHTML = data.disks.map(d => {
-      const pct = d.use || 0;
-      const cls = pct>85?'red':pct>60?'amber':'green';
-      return `<div class="disk-item">
-        <div class="disk-name"><span>${d.mount}</span><span class="disk-size">${fmtBytes(d.used)} / ${fmtBytes(d.total)}</span></div>
-        <div class="gauge-track"><div class="gauge-fill ${cls}" style="width:${pct}%"></div></div>
-      </div>`;
+  if(d.disks?.length){
+    $('disk-body').innerHTML=d.disks.map(d=>{
+      const p=d.use||0,c=p>85?'c5':p>60?'c4':'c1';
+      return`<div class="disk-row"><div class="disk-info"><span>${d.mount}</span><span class="disk-sz">${fmtB(d.used)} / ${fmtB(d.total)}</span></div><div class="gauge-track"><div class="gauge-bar ${c}" style="width:${p}%"></div></div></div>`;
     }).join('');
   }
 
-  // Processes
-  if(data.processes?.length) {
-    const stateMap = {S:'Sleep',R:'Run',D:'Disk',Z:'Zomb',T:'Stop'};
-    $('proc-body').innerHTML = data.processes.map(p => `<tr>
-      <td class="pid">${p.pid}</td>
-      <td class="name">${p.name}</td>
-      <td class="cpu">${p.cpu.toFixed(1)}</td>
-      <td class="mem">${p.mem.toFixed(1)}</td>
-      <td>${stateMap[p.state]||p.state}</td>
-    </tr>`).join('');
+  if(d.processes?.length){
+    const sm={S:'Sleep',R:'Run',D:'Disk',Z:'Zomb',T:'Stop'};
+    $('proc-body').innerHTML=d.processes.map(p=>`<tr><td class="p-pid">${p.pid}</td><td class="p-name">${p.name}</td><td class="p-cpu">${p.cpu.toFixed(1)}</td><td class="p-mem">${p.mem.toFixed(1)}</td><td>${sm[p.state]||p.state}</td></tr>`).join('');
   }
 
-  // Network graph data
-  netDown.push(data.netIO?.rx_sec || 0);
-  netUp.push(data.netIO?.tx_sec || 0);
-  if(netDown.length>NET_POINTS){netDown.shift();netUp.shift();}
+  nD.push(d.netIO?.rx_sec||0);nU.push(d.netIO?.tx_sec||0);
+  if(nD.length>NP){nD.shift();nU.shift();}
   drawGraph();
 
-  // Footer
-  $('load-avg').textContent = data.loadAvg || '--';
-  $('net-iface').textContent = (data.netInterfaces||[]).join(', ') || '--';
-  $('tcp-count').textContent = data.tcpCount ?? '--';
+  $('load-avg').textContent=d.loadAvg||'--';
+  $('net-iface').textContent=(d.netInterfaces||[]).join(', ')||'--';
+  $('tcp-count').textContent=d.tcpCount??'--';
 
-  // Logs
-  if(data.logs?.length) {
-    const list = $('log-list');
-    list.innerHTML = data.logs.map(l => {
-      const now = new Date().toTimeString().slice(0,8);
-      return `<div class="log-entry ${l.type||''}"><span class="log-time">${now}</span><span class="log-msg">${l.msg}</span></div>`;
+  if(d.logs?.length){
+    $('log-box').innerHTML=d.logs.map(l=>{
+      const t=new Date().toTimeString().slice(0,8);
+      return`<div class="log-item ${l.type||''}"><span class="log-ts">${t}</span><span class="log-msg">${l.msg}</span></div>`;
     }).join('');
   }
 }
 
-// Connection status
-function setConnStatus(online) {
-  const el = $('conn-status');
-  el.className = 'header-status ' + (online?'online':'offline');
-  el.querySelector('span').textContent = online?'ONLINE':'OFFLINE';
+function setConn(ok){
+  const el=$('conn-status');
+  el.className='conn-status '+(ok?'online':'offline');
+  el.querySelector('span').textContent=ok?'ONLINE':'OFFLINE';
 }
 
-// WebSocket connection
-function connectWS() {
-  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const ws = new WebSocket(`${proto}//${location.host}/ws`);
-
-  ws.onopen = () => {
-    setConnStatus(true);
-    console.log('WS connected');
-  };
-  ws.onmessage = (e) => {
-    try {
-      const data = JSON.parse(e.data);
-      if(data.error) { console.error('Server error:', data.error); return; }
-      updateUI(data);
-    } catch(err) { console.error('Parse error:', err); }
-  };
-  ws.onclose = () => {
-    setConnStatus(false);
-    console.log('WS closed, reconnecting in 5s...');
-    setTimeout(connectWS, 5000);
-  };
-  ws.onerror = () => ws.close();
+function connectWS(){
+  const proto=location.protocol==='https:'?'wss:':'ws:';
+  const ws=new WebSocket(`${proto}//${location.host}/ws`);
+  ws.onopen=()=>{setConn(true);};
+  ws.onmessage=e=>{try{const d=JSON.parse(e.data);if(!d.error)updateUI(d);}catch(err){}};
+  ws.onclose=()=>{setConn(false);setTimeout(connectWS,5000);};
+  ws.onerror=()=>ws.close();
 }
-
 connectWS();
 </script>
 </body>

@@ -12,10 +12,10 @@
   --bg-deep: #070d1a;
   --bg-panel: rgba(14,24,48,0.85);
   --bg-panel-hover: rgba(18,30,56,0.9);
-  --accent: #00d4c8;
-  --accent-dim: rgba(0,212,200,0.12);
-  --accent-glow: rgba(0,212,200,0.35);
-  --accent-soft: #4fd1c5;
+  --accent: #2dd4a0;
+  --accent-dim: rgba(45,212,160,0.12);
+  --accent-glow: rgba(45,212,160,0.35);
+  --accent-soft: #52e0b0;
   --blue: #6ba3d6;
   --blue-dim: rgba(107,163,214,0.12);
   --red: #f06565;
@@ -27,9 +27,9 @@
   --text: rgba(200,215,235,0.82);
   --text-dim: rgba(140,165,200,0.5);
   --text-bright: rgba(230,240,255,0.95);
-  --border: rgba(0,212,200,0.1);
-  --border-bright: rgba(0,212,200,0.3);
-  --glass: rgba(20,40,80,0.4);
+  --border: rgba(45,212,160,0.1);
+  --border-bright: rgba(45,212,160,0.3);
+  --glass: rgba(15,40,50,0.4);
   --font-display: 'Rajdhani', sans-serif;
   --font-ui: 'Noto Sans SC', sans-serif;
 }
@@ -53,8 +53,8 @@ body::before {
     linear-gradient(150deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
     linear-gradient(30deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
     linear-gradient(150deg, var(--accent) 12%, transparent 12.5%, transparent 87%, var(--accent) 87.5%, var(--accent)),
-    linear-gradient(60deg, rgba(0,212,200,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,212,200,0.5) 75%, rgba(0,212,200,0.5)),
-    linear-gradient(60deg, rgba(0,212,200,0.5) 25%, transparent 25.5%, transparent 75%, rgba(0,212,200,0.5) 75%, rgba(0,212,200,0.5));
+    linear-gradient(60deg, rgba(45,212,160,0.5) 25%, transparent 25.5%, transparent 75%, rgba(45,212,160,0.5) 75%, rgba(45,212,160,0.5)),
+    linear-gradient(60deg, rgba(45,212,160,0.5) 25%, transparent 25.5%, transparent 75%, rgba(45,212,160,0.5) 75%, rgba(45,212,160,0.5));
   background-size: 80px 140px;
   background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
 }
@@ -63,7 +63,7 @@ body::before {
 body::after {
   content:''; position:fixed; top:-30%; left:50%; transform:translateX(-50%);
   width:80%; height:60%; z-index:0; pointer-events:none;
-  background: radial-gradient(ellipse, rgba(0,212,200,0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(45,212,160,0.04) 0%, transparent 70%);
 }
 
 .dashboard {
@@ -111,8 +111,9 @@ body::after {
 .conn-dot {
   width:6px; height:6px; border-radius:50%;
 }
-.conn-status.online .conn-dot { background:var(--green); box-shadow:0 0 8px var(--green); animation:blink 2s ease-in-out infinite; }
+.conn-status.online .conn-dot { background:var(--accent); box-shadow:0 0 8px var(--accent); animation:blink 2s ease-in-out infinite; }
 .conn-status.offline .conn-dot { background:var(--red); box-shadow:0 0 8px var(--red); }
+.conn-status.offline { color:var(--red); }
 @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
 .clock-time {
   font-family:var(--font-display); font-size:22px; font-weight:600;
@@ -182,7 +183,7 @@ body::after {
 .gauge-bar {
   height:100%; border-radius:2px; transition:width 1s ease;
 }
-.gauge-bar.c1 { background:linear-gradient(90deg,#0a6e68,var(--accent)); box-shadow:0 0 8px var(--accent-dim); }
+.gauge-bar.c1 { background:linear-gradient(90deg,#1a8a6a,var(--accent)); box-shadow:0 0 8px var(--accent-dim); }
 .gauge-bar.c2 { background:linear-gradient(90deg,#2a6a9a,var(--blue)); box-shadow:0 0 8px var(--blue-dim); }
 .gauge-bar.c3 { background:linear-gradient(90deg,#2a7a4a,var(--green)); box-shadow:0 0 8px var(--green-dim); }
 .gauge-bar.c4 { background:linear-gradient(90deg,#8a5a2a,var(--amber)); box-shadow:0 0 8px var(--amber-dim); }
@@ -344,7 +345,7 @@ body::after {
         <div class="graph-wrap">
           <canvas id="net-graph"></canvas>
           <div class="graph-legend">
-            <span><div class="leg-line" style="background:var(--accent)"></div>RX ↓</span>
+            <span><div class="leg-line" style="background:#2dd4a0"></div>RX ↓</span>
             <span><div class="leg-line" style="background:var(--blue)"></div>TX ↑</span>
           </div>
         </div>
@@ -422,11 +423,11 @@ function drawGraph(){
   const mx=Math.max(1024,...nD,...nU)*1.2;
   const p={t:8,b:18,l:48,r:8},gW=W-p.l-p.r,gH=H-p.t-p.b;
 
-  ctx.strokeStyle='rgba(0,212,200,0.04)';ctx.lineWidth=1;
+  ctx.strokeStyle='rgba(45,212,160,0.04)';ctx.lineWidth=1;
   for(let i=0;i<=4;i++){
     const y=p.t+gH*i/4;
     ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+gW,y);ctx.stroke();
-    ctx.fillStyle='rgba(140,165,200,0.25)';ctx.font='10px Rajdhani';ctx.textAlign='right';
+    ctx.fillStyle='rgba(140,200,180,0.25)';ctx.font='10px Rajdhani';ctx.textAlign='right';
     ctx.fillText(fmtB(mx*(1-i/4))+'/s',p.l-5,y+4);
   }
 
@@ -438,7 +439,7 @@ function drawGraph(){
     const lx=p.l+((data.length-1)/(NP-1))*gW;
     ctx.lineTo(lx,p.t+gH);ctx.lineTo(p.l,p.t+gH);ctx.closePath();ctx.fillStyle=fill;ctx.fill();
   }
-  line(nD,'#00d4c8','rgba(0,212,200,0.06)');
+  line(nD,'#2dd4a0','rgba(45,212,160,0.06)');
   line(nU,'#6ba3d6','rgba(107,163,214,0.06)');
 }
 

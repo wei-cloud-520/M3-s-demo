@@ -1,2 +1,11 @@
 node_modules/
 .git/
+.openclaw/
+skills/
+SOUL.md
+USER.md
+IDENTITY.md
+AGENTS.md
+BOOTSTRAP.md
+HEARTBEAT.md
+TOOLS.md

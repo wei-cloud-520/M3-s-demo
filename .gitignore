@@ -1,1 +1,12 @@
 node_modules/
+
+# agent 配置，不推送
+SOUL.md
+USER.md
+IDENTITY.md
+AGENTS.md
+BOOTSTRAP.md
+HEARTBEAT.md
+TOOLS.md
+.openclaw/
+skills/

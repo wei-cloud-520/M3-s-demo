@@ -13,6 +13,10 @@ Things like:
 - Device nicknames
 - Anything environment-specific
 
+## Vision
+- 备用脚本: `python3 scripts/vision.py <图片路径> "<描述提示>"`
+- 优先使用内置 image 工具，脚本作为 fallback
+
 ## Examples
 
 ```markdown

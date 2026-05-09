@@ -1,0 +1,88 @@
+2026-05-06 21:00:56,057	kaltsit-v2pro	INFO	{'train': {'log_interval': 100, 'eval_interval': 500, 'seed': 1234, 'epochs': 20, 'learning_rate': 0.0001, 'betas': [0.8, 0.99], 'eps': 1e-09, 'batch_size': 4, 'fp16_run': True, 'lr_decay': 0.999875, 'segment_size': 20480, 'init_lr_ratio': 1, 'warmup_epochs': 0, 'c_mel': 45, 'c_kl': 1.0, 'text_low_lr_rate': 0.2, 'grad_ckpt': False, 'pretrained_s2G': 'GPT_SoVITS/pretrained_models/v2Pro/s2Gv2Pro.pth', 'pretrained_s2D': 'GPT_SoVITS/pretrained_models/v2Pro/s2Dv2Pro.pth', 'if_save_latest': False, 'if_save_every_weights': True, 'save_every_epoch': 2, 'gpu_numbers': '0', 'lora_rank': '32'}, 'data': {'max_wav_value': 32768.0, 'sampling_rate': 32000, 'filter_length': 2048, 'hop_length': 640, 'win_length': 2048, 'n_mel_channels': 128, 'mel_fmin': 0.0, 'mel_fmax': None, 'add_blank': True, 'n_speakers': 300, 'cleaned_text': True, 'exp_dir': 'logs/kaltsit-v2pro'}, 'model': {'inter_channels': 192, 'hidden_channels': 192, 'filter_channels': 768, 'n_heads': 2, 'n_layers': 6, 'kernel_size': 3, 'p_dropout': 0.0, 'resblock': '1', 'resblock_kernel_sizes': [3, 7, 11], 'resblock_dilation_sizes': [[1, 3, 5], [1, 3, 5], [1, 3, 5]], 'upsample_rates': [10, 8, 2, 2, 2], 'upsample_initial_channel': 512, 'upsample_kernel_sizes': [16, 16, 8, 2, 2], 'n_layers_q': 3, 'use_spectral_norm': False, 'gin_channels': 1024, 'semantic_frame_rate': '25hz', 'freeze_quantizer': True, 'version': 'v2Pro'}, 's2_ckpt_dir': 'logs/kaltsit-v2pro', 'content_module': 'cnhubert', 'save_weight_dir': 'SoVITS_weights_v2Pro', 'name': 'kaltsit-v2pro', 'version': 'v2Pro', 'pretrain': None, 'resume_step': None}
+2026-05-06 21:03:16,288	kaltsit-v2pro	INFO	{'train': {'log_interval': 100, 'eval_interval': 500, 'seed': 1234, 'epochs': 20, 'learning_rate': 0.0001, 'betas': [0.8, 0.99], 'eps': 1e-09, 'batch_size': 4, 'fp16_run': True, 'lr_decay': 0.999875, 'segment_size': 20480, 'init_lr_ratio': 1, 'warmup_epochs': 0, 'c_mel': 45, 'c_kl': 1.0, 'text_low_lr_rate': 0.2, 'grad_ckpt': False, 'pretrained_s2G': 'GPT_SoVITS/pretrained_models/v2Pro/s2Gv2Pro.pth', 'pretrained_s2D': 'GPT_SoVITS/pretrained_models/v2Pro/s2Dv2Pro.pth', 'if_save_latest': False, 'if_save_every_weights': True, 'save_every_epoch': 2, 'gpu_numbers': '0', 'lora_rank': '32'}, 'data': {'max_wav_value': 32768.0, 'sampling_rate': 32000, 'filter_length': 2048, 'hop_length': 640, 'win_length': 2048, 'n_mel_channels': 128, 'mel_fmin': 0.0, 'mel_fmax': None, 'add_blank': True, 'n_speakers': 300, 'cleaned_text': True, 'exp_dir': 'logs/kaltsit-v2pro'}, 'model': {'inter_channels': 192, 'hidden_channels': 192, 'filter_channels': 768, 'n_heads': 2, 'n_layers': 6, 'kernel_size': 3, 'p_dropout': 0.0, 'resblock': '1', 'resblock_kernel_sizes': [3, 7, 11], 'resblock_dilation_sizes': [[1, 3, 5], [1, 3, 5], [1, 3, 5]], 'upsample_rates': [10, 8, 2, 2, 2], 'upsample_initial_channel': 512, 'upsample_kernel_sizes': [16, 16, 8, 2, 2], 'n_layers_q': 3, 'use_spectral_norm': False, 'gin_channels': 1024, 'semantic_frame_rate': '25hz', 'freeze_quantizer': True, 'version': 'v2Pro'}, 's2_ckpt_dir': 'logs/kaltsit-v2pro', 'content_module': 'cnhubert', 'save_weight_dir': 'SoVITS_weights_v2Pro', 'name': 'kaltsit-v2pro', 'version': 'v2Pro', 'pretrain': None, 'resume_step': None}
+2026-05-06 21:03:17,677	kaltsit-v2pro	INFO	loaded pretrained GPT_SoVITS/pretrained_models/v2Pro/s2Gv2Pro.pth
+2026-05-06 21:03:18,055	kaltsit-v2pro	INFO	loaded pretrained GPT_SoVITS/pretrained_models/v2Pro/s2Dv2Pro.pth
+2026-05-06 21:03:55,461	kaltsit-v2pro	INFO	Train Epoch: 1 [0%]
+2026-05-06 21:03:55,463	kaltsit-v2pro	INFO	[3.6731743812561035, 2.4344162940979004, 19.528343200683594, 20.286012649536133, 0.0, 2.332029342651367, 0, 9.99875e-05]
+2026-05-06 21:08:05,500	kaltsit-v2pro	INFO	{'train': {'log_interval': 100, 'eval_interval': 500, 'seed': 1234, 'epochs': 20, 'learning_rate': 0.0001, 'betas': [0.8, 0.99], 'eps': 1e-09, 'batch_size': 4, 'fp16_run': True, 'lr_decay': 0.999875, 'segment_size': 20480, 'init_lr_ratio': 1, 'warmup_epochs': 0, 'c_mel': 45, 'c_kl': 1.0, 'text_low_lr_rate': 0.2, 'grad_ckpt': False, 'pretrained_s2G': 'GPT_SoVITS/pretrained_models/v2Pro/s2Gv2Pro.pth', 'pretrained_s2D': 'GPT_SoVITS/pretrained_models/v2Pro/s2Dv2Pro.pth', 'if_save_latest': False, 'if_save_every_weights': True, 'save_every_epoch': 2, 'gpu_numbers': '0', 'lora_rank': '32'}, 'data': {'max_wav_value': 32768.0, 'sampling_rate': 32000, 'filter_length': 2048, 'hop_length': 640, 'win_length': 2048, 'n_mel_channels': 128, 'mel_fmin': 0.0, 'mel_fmax': None, 'add_blank': True, 'n_speakers': 300, 'cleaned_text': True, 'exp_dir': 'logs/kaltsit-v2pro'}, 'model': {'inter_channels': 192, 'hidden_channels': 192, 'filter_channels': 768, 'n_heads': 2, 'n_layers': 6, 'kernel_size': 3, 'p_dropout': 0.0, 'resblock': '1', 'resblock_kernel_sizes': [3, 7, 11], 'resblock_dilation_sizes': [[1, 3, 5], [1, 3, 5], [1, 3, 5]], 'upsample_rates': [10, 8, 2, 2, 2], 'upsample_initial_channel': 512, 'upsample_kernel_sizes': [16, 16, 8, 2, 2], 'n_layers_q': 3, 'use_spectral_norm': False, 'gin_channels': 1024, 'semantic_frame_rate': '25hz', 'freeze_quantizer': True, 'version': 'v2Pro'}, 's2_ckpt_dir': 'logs/kaltsit-v2pro', 'content_module': 'cnhubert', 'save_weight_dir': 'SoVITS_weights_v2Pro', 'name': 'kaltsit-v2pro', 'version': 'v2Pro', 'pretrain': None, 'resume_step': None}
+2026-05-06 21:08:35,381	kaltsit-v2pro	INFO	{'train': {'log_interval': 100, 'eval_interval': 500, 'seed': 1234, 'epochs': 20, 'learning_rate': 0.0001, 'betas': [0.8, 0.99], 'eps': 1e-09, 'batch_size': 2, 'fp16_run': True, 'lr_decay': 0.999875, 'segment_size': 20480, 'init_lr_ratio': 1, 'warmup_epochs': 0, 'c_mel': 45, 'c_kl': 1.0, 'text_low_lr_rate': 0.2, 'grad_ckpt': False, 'pretrained_s2G': 'GPT_SoVITS/pretrained_models/v2Pro/s2Gv2Pro.pth', 'pretrained_s2D': 'GPT_SoVITS/pretrained_models/v2Pro/s2Dv2Pro.pth', 'if_save_latest': False, 'if_save_every_weights': True, 'save_every_epoch': 2, 'gpu_numbers': '0', 'lora_rank': '32'}, 'data': {'max_wav_value': 32768.0, 'sampling_rate': 32000, 'filter_length': 2048, 'hop_length': 640, 'win_length': 2048, 'n_mel_channels': 128, 'mel_fmin': 0.0, 'mel_fmax': None, 'add_blank': True, 'n_speakers': 300, 'cleaned_text': True, 'exp_dir': 'logs/kaltsit-v2pro'}, 'model': {'inter_channels': 192, 'hidden_channels': 192, 'filter_channels': 768, 'n_heads': 2, 'n_layers': 6, 'kernel_size': 3, 'p_dropout': 0.0, 'resblock': '1', 'resblock_kernel_sizes': [3, 7, 11], 'resblock_dilation_sizes': [[1, 3, 5], [1, 3, 5], [1, 3, 5]], 'upsample_rates': [10, 8, 2, 2, 2], 'upsample_initial_channel': 512, 'upsample_kernel_sizes': [16, 16, 8, 2, 2], 'n_layers_q': 3, 'use_spectral_norm': False, 'gin_channels': 1024, 'semantic_frame_rate': '25hz', 'freeze_quantizer': True, 'version': 'v2Pro'}, 's2_ckpt_dir': 'logs/kaltsit-v2pro', 'content_module': 'cnhubert', 'save_weight_dir': 'SoVITS_weights_v2Pro', 'name': 'kaltsit-v2pro', 'version': 'v2Pro', 'pretrain': None, 'resume_step': None}
+2026-05-06 21:08:37,198	kaltsit-v2pro	INFO	loaded pretrained GPT_SoVITS/pretrained_models/v2Pro/s2Gv2Pro.pth
+2026-05-06 21:08:37,675	kaltsit-v2pro	INFO	loaded pretrained GPT_SoVITS/pretrained_models/v2Pro/s2Dv2Pro.pth
+2026-05-06 21:09:11,070	kaltsit-v2pro	INFO	Train Epoch: 1 [0%]
+2026-05-06 21:09:11,070	kaltsit-v2pro	INFO	[3.8700027465820312, 2.606663227081299, 8.333319664001465, 14.436176300048828, 0.0, 2.4958200454711914, 0, 9.99875e-05]
+2026-05-06 21:09:59,214	kaltsit-v2pro	INFO	====> Epoch: 1
+2026-05-06 21:10:22,443	kaltsit-v2pro	INFO	Train Epoch: 2 [52%]
+2026-05-06 21:10:22,443	kaltsit-v2pro	INFO	[3.490312337875366, 2.7427263259887695, 17.778615951538086, 21.253223419189453, 0.0, 0.4150751531124115, 100, 9.99750015625e-05]
+2026-05-06 21:10:42,544	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 2 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_132.pth
+2026-05-06 21:10:43,610	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 2 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_132.pth
+2026-05-06 21:10:44,989	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e2:Success.
+2026-05-06 21:10:44,989	kaltsit-v2pro	INFO	====> Epoch: 2
+2026-05-06 21:11:27,133	kaltsit-v2pro	INFO	====> Epoch: 3
+2026-05-06 21:11:29,430	kaltsit-v2pro	INFO	Train Epoch: 4 [3%]
+2026-05-06 21:11:29,430	kaltsit-v2pro	INFO	[3.5247018337249756, 2.727332592010498, 18.670217514038086, 21.1593017578125, 0.0, 1.725382685661316, 200, 9.995000937421877e-05]
+2026-05-06 21:12:09,284	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 4 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_264.pth
+2026-05-06 21:12:10,445	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 4 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_264.pth
+2026-05-06 21:12:11,811	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e4:Success.
+2026-05-06 21:12:11,816	kaltsit-v2pro	INFO	====> Epoch: 4
+2026-05-06 21:12:36,239	kaltsit-v2pro	INFO	Train Epoch: 5 [55%]
+2026-05-06 21:12:36,239	kaltsit-v2pro	INFO	[3.2758255004882812, 3.0898659229278564, 17.918901443481445, 21.331741333007812, 0.0, 1.4157835245132446, 300, 9.993751562304699e-05]
+2026-05-06 21:12:56,300	kaltsit-v2pro	INFO	====> Epoch: 5
+2026-05-06 21:13:40,205	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 6 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_396.pth
+2026-05-06 21:13:41,327	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 6 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_396.pth
+2026-05-06 21:13:42,854	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e6:Success.
+2026-05-06 21:13:42,854	kaltsit-v2pro	INFO	====> Epoch: 6
+2026-05-06 21:13:46,958	kaltsit-v2pro	INFO	Train Epoch: 7 [6%]
+2026-05-06 21:13:46,958	kaltsit-v2pro	INFO	[3.5313382148742676, 3.2015888690948486, 20.98124885559082, 20.012226104736328, 0.0, 2.3899691104888916, 400, 9.991253280566489e-05]
+2026-05-06 21:14:27,397	kaltsit-v2pro	INFO	====> Epoch: 7
+2026-05-06 21:14:53,092	kaltsit-v2pro	INFO	Train Epoch: 8 [58%]
+2026-05-06 21:14:53,093	kaltsit-v2pro	INFO	[3.4135642051696777, 2.9484739303588867, 19.804885864257812, 19.137096405029297, 0.0, 1.0961934328079224, 500, 9.990004373906418e-05]
+2026-05-06 21:15:11,992	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 8 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_528.pth
+2026-05-06 21:15:13,036	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 8 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_528.pth
+2026-05-06 21:15:14,486	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e8:Success.
+2026-05-06 21:15:14,488	kaltsit-v2pro	INFO	====> Epoch: 8
+2026-05-06 21:15:59,442	kaltsit-v2pro	INFO	====> Epoch: 9
+2026-05-06 21:16:03,917	kaltsit-v2pro	INFO	Train Epoch: 10 [9%]
+2026-05-06 21:16:03,919	kaltsit-v2pro	INFO	[3.4801197052001953, 2.7764222621917725, 13.962160110473633, 17.794872283935547, 0.0, 0.8309100270271301, 600, 9.987507028906759e-05]
+2026-05-06 21:16:41,982	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 10 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_660.pth
+2026-05-06 21:16:42,981	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 10 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_660.pth
+2026-05-06 21:16:44,262	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e10:Success.
+2026-05-06 21:16:44,263	kaltsit-v2pro	INFO	====> Epoch: 10
+2026-05-06 21:17:10,131	kaltsit-v2pro	INFO	Train Epoch: 11 [61%]
+2026-05-06 21:17:10,131	kaltsit-v2pro	INFO	[4.082623481750488, 2.3194730281829834, 4.718549728393555, 8.374923706054688, 0.0, 1.6410372257232666, 700, 9.986258590528146e-05]
+2026-05-06 21:17:25,470	kaltsit-v2pro	INFO	====> Epoch: 11
+2026-05-06 21:18:04,960	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 12 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_792.pth
+2026-05-06 21:18:06,108	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 12 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_792.pth
+2026-05-06 21:18:07,330	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e12:Success.
+2026-05-06 21:18:07,330	kaltsit-v2pro	INFO	====> Epoch: 12
+2026-05-06 21:18:12,630	kaltsit-v2pro	INFO	Train Epoch: 13 [12%]
+2026-05-06 21:18:12,667	kaltsit-v2pro	INFO	[3.4919934272766113, 2.8016817569732666, 14.065777778625488, 20.373023986816406, 0.0, 1.435397744178772, 800, 9.983762181915804e-05]
+2026-05-06 21:18:45,215	kaltsit-v2pro	INFO	====> Epoch: 13
+2026-05-06 21:19:09,545	kaltsit-v2pro	INFO	Train Epoch: 14 [64%]
+2026-05-06 21:19:09,585	kaltsit-v2pro	INFO	[3.681795835494995, 2.922006130218506, 11.048256874084473, 16.27645492553711, 0.0, 1.5951149463653564, 900, 9.982514211643064e-05]
+2026-05-06 21:19:22,608	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 14 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_924.pth
+2026-05-06 21:19:24,103	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 14 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_924.pth
+2026-05-06 21:19:26,162	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e14:Success.
+2026-05-06 21:19:26,163	kaltsit-v2pro	INFO	====> Epoch: 14
+2026-05-06 21:20:03,407	kaltsit-v2pro	INFO	====> Epoch: 15
+2026-05-06 21:20:09,819	kaltsit-v2pro	INFO	Train Epoch: 16 [15%]
+2026-05-06 21:20:09,859	kaltsit-v2pro	INFO	[3.405005693435669, 3.0379250049591064, 21.313634872436523, 21.00137710571289, 0.0, 1.078808069229126, 1000, 9.980018739066937e-05]
+2026-05-06 21:20:41,196	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 16 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_1056.pth
+2026-05-06 21:20:42,191	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 16 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_1056.pth
+2026-05-06 21:20:43,427	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e16:Success.
+2026-05-06 21:20:43,427	kaltsit-v2pro	INFO	====> Epoch: 16
+2026-05-06 21:21:09,361	kaltsit-v2pro	INFO	Train Epoch: 17 [67%]
+2026-05-06 21:21:09,386	kaltsit-v2pro	INFO	[3.623241424560547, 2.8044543266296387, 10.562089920043945, 20.094253540039062, 0.0, 1.405234456062317, 1100, 9.978771236724554e-05]
+2026-05-06 21:21:21,034	kaltsit-v2pro	INFO	====> Epoch: 17
+2026-05-06 21:21:58,695	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 18 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_1188.pth
+2026-05-06 21:21:59,684	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 18 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_1188.pth
+2026-05-06 21:22:00,913	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e18:Success.
+2026-05-06 21:22:00,915	kaltsit-v2pro	INFO	====> Epoch: 18
+2026-05-06 21:22:08,065	kaltsit-v2pro	INFO	Train Epoch: 19 [18%]
+2026-05-06 21:22:08,103	kaltsit-v2pro	INFO	[3.3506529331207275, 3.1373202800750732, 9.725116729736328, 17.698060989379883, 0.0, 1.4152677059173584, 1200, 9.976276699833672e-05]
+2026-05-06 21:22:38,811	kaltsit-v2pro	INFO	====> Epoch: 19
+2026-05-06 21:23:04,520	kaltsit-v2pro	INFO	Train Epoch: 20 [70%]
+2026-05-06 21:23:04,560	kaltsit-v2pro	INFO	[3.771477222442627, 3.1847383975982666, 8.352535247802734, 12.728282928466797, 0.0, 1.2623947858810425, 1300, 9.975029665246193e-05]
+2026-05-06 21:23:15,668	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 20 to logs/kaltsit-v2pro/logs_s2_v2Pro\G_1320.pth
+2026-05-06 21:23:17,063	kaltsit-v2pro	INFO	Saving model and optimizer state at iteration 20 to logs/kaltsit-v2pro/logs_s2_v2Pro\D_1320.pth
+2026-05-06 21:23:18,315	kaltsit-v2pro	INFO	saving ckpt kaltsit-v2pro_e20:Success.
+2026-05-06 21:23:18,316	kaltsit-v2pro	INFO	====> Epoch: 20

@@ -125,17 +125,31 @@ def build_context(chapter_num, chapter_title, chapter_beats):
     return context
 
 
-def call_deepseek(messages, model="deepseek-v4-pro", max_tokens=8000, temperature=0.8):
-    """调用 DeepSeek API"""
+def call_deepseek(messages, model="deepseek-v4-pro", max_tokens=8000, temperature=None,
+                   thinking=None, reasoning_effort=None):
+    """调用 DeepSeek API
+
+    Args:
+        thinking: None=不设置(模型默认enabled), "enabled"/"disabled"
+        reasoning_effort: "high" 或 "max" (仅 thinking=enabled 时有效)
+        temperature: 仅 thinking=disabled 时有效，思考模式下会被忽略
+    """
+    body = {
+        "model": model,
+        "messages": messages,
+        "max_tokens": max_tokens,
+    }
+    if thinking is not None:
+        body["thinking"] = {"type": thinking}
+    if reasoning_effort is not None:
+        body["reasoning_effort"] = reasoning_effort
+    if temperature is not None and thinking != "enabled":
+        body["temperature"] = temperature
+
     resp = requests.post(API_URL,
         headers={"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"},
-        json={
-            "model": model,
-            "messages": messages,
-            "max_tokens": max_tokens,
-            "temperature": temperature
-        },
-        timeout=180
+        json=body,
+        timeout=300
     )
     resp.raise_for_status()
     return resp.json()["choices"][0]["message"]["content"]
@@ -160,10 +174,11 @@ def generate_chapter(chapter_num, dry_run=False):
     # Step 1: 生成正文
     print("正在生成正文...")
     messages = [
-        {"role": "system", "content": "你是一个中文小说家。直接输出小说正文，不需要章节标题，不要任何前言后记。中文写作，2000-3000字。"},
+        {"role": "system", "content": "你是一个中文小说家。直接输出小说正文，不需要章节标题，不要任何前言后记。中文写作，4000-5000字。"},
         {"role": "user", "content": f"请根据以下信息写第{chapter_num}章的完整正文：\n\n{context}"}
     ]
-    content = call_deepseek(messages, model="deepseek-v4-pro")
+    content = call_deepseek(messages, model="deepseek-v4-pro",
+                               thinking="enabled", reasoning_effort="high")
 
     # 保存正文
     os.makedirs(CHAPTERS_DIR, exist_ok=True)
@@ -178,7 +193,8 @@ def generate_chapter(chapter_num, dry_run=False):
         {"role": "system", "content": "用200字以内总结以下章节的关键事件、人物变化和伏笔。纯文本，不要markdown格式。"},
         {"role": "user", "content": content}
     ]
-    summary = call_deepseek(summary_messages, model="deepseek-v4-flash", max_tokens=500, temperature=0.3)
+    summary = call_deepseek(summary_messages, model="deepseek-v4-flash",
+                               max_tokens=500, temperature=0.3, thinking="disabled")
 
     os.makedirs(SUMMARIES_DIR, exist_ok=True)
     summary_path = os.path.join(SUMMARIES_DIR, f"ch{chapter_num:02d}.md")
